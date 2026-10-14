@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Memoria de Capitán Sarmiento · Archivo fotográfico y documental</title>
+<meta name="description" content="Archivo de fotografías y documentos históricos de Capitán Sarmiento, provincia de Buenos Aires. Proyecto de memoria local.">
+<meta property="og:title" content="Memoria de Capitán Sarmiento">
+<meta property="og:description" content="Fotografías y documentos para conservar y consultar la historia de Capitán Sarmiento.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root{--bg:#f5efe3;--surf:#ece4d4;--ink:#1f1c18;--mut:#5c554a;--line:#d3c8b3;--acc:#6a1b2a;--onacc:#fbf6ec;
+--serif:"Source Serif 4",Georgia,"Times New Roman",serif;--sans:"Source Sans 3",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171512;--surf:#221f1a;--ink:#eee7d9;--mut:#b4aa95;--line:#3b362d;--acc:#e0a0ab;--onacc:#1b1410;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171512;--surf:#221f1a;--ink:#eee7d9;--mut:#b4aa95;--line:#3b362d;--acc:#e0a0ab;--onacc:#1b1410;color-scheme:dark}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--sans);overflow-wrap:break-word}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--acc);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15;margin:0}
+h1{font-size:clamp(2.1rem,6vw,3.6rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3.6vw,2.1rem)}
+h3{font-size:1.2rem}
+p{margin:0 0 1em;max-width:66ch}
+.wrap{max-width:1160px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--bg);padding:.6rem 1rem;z-index:20}
+.skip:focus{left:0}
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:64px}
+.brand{font:600 1.15rem/1.1 var(--serif);color:var(--ink);text-decoration:none}
+.brand small{display:block;font:400 .72rem var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:.15rem}
+#nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1.3rem}
+#nav a{font-size:.95rem;color:var(--ink);text-decoration:none;padding:.5rem 0;border-bottom:2px solid transparent}
+#nav a:hover,#nav a[aria-current]{border-color:var(--acc)}
+.menu{display:none;background:none;border:1px solid var(--line);color:var(--ink);min-width:44px;min-height:44px;padding:0 .8rem;font:inherit;align-items:center;gap:.5rem;cursor:pointer}
+@media(max-width:860px){.menu{display:inline-flex}#nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--bg);border-bottom:1px solid var(--line);padding:.5rem clamp(1rem,4vw,2rem) 1rem}
+#nav.open{display:block}#nav ul{flex-direction:column;gap:0}#nav a{display:block;padding:.8rem 0;border-bottom:1px solid var(--line)}}
+main{outline:none;min-height:60vh;padding-bottom:4rem}
+.kick{font:600 .78rem var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin:0 0 .8rem}
+.lead{font:400 1.25rem/1.55 var(--serif);color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;min-height:46px;padding:0 1.2rem;background:var(--acc);color:var(--onacc);text-decoration:none;font-weight:600;border:0;cursor:pointer;font-family:var(--sans);font-size:1rem}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--ink)}
+.btn.sm{min-height:40px;padding:0 .9rem;font-size:.95rem}
+.hero{display:grid;gap:2rem;padding:clamp(2rem,6vw,4.5rem) 0 2.5rem;grid-template-columns:1fr}
+@media(min-width:900px){.hero{grid-template-columns:5fr 6fr;align-items:end}}
+.hero .acts{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.5rem}
+figure{margin:0}
+figcaption{font-size:.88rem;color:var(--mut);margin-top:.5rem}
+.sec{padding:2.5rem 0;border-top:1px solid var(--line)}
+.sec>h2,.sec>.head{margin-bottom:1.4rem}
+.head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem 1rem}
+.pick{display:grid;gap:1.5rem 1.2rem;grid-template-columns:repeat(6,1fr)}
+.pick a:nth-child(1){grid-column:span 6}.pick a:nth-child(n+2){grid-column:span 6}
+@media(min-width:700px){.pick a:nth-child(1){grid-column:span 4}.pick a:nth-child(2){grid-column:span 2}.pick a:nth-child(n+3){grid-column:span 3}}
+.pick .ph img{aspect-ratio:4/3;object-fit:cover;width:100%}
+.pick a:nth-child(1) img{aspect-ratio:16/10}
+.ph{color:var(--ink);text-decoration:none;display:block}
+.ph img{background:var(--surf);width:100%}
+.ph .cap{display:block;margin-top:.5rem}
+.ph .cap b{display:block;font:600 1rem/1.3 var(--serif)}
+.ph .cap small{color:var(--mut);font-size:.85rem}
+.ph:hover .cap b{text-decoration:underline;text-decoration-color:var(--acc);text-underline-offset:3px}
+.grid{columns:1;column-gap:1.5rem}
+@media(min-width:600px){.grid{columns:2}}@media(min-width:960px){.grid{columns:3}}
+.grid .ph{break-inside:avoid;margin-bottom:1.6rem}
+.tools{display:flex;flex-wrap:wrap;gap:1rem;align-items:end;margin:0 0 1.5rem;padding:1rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tools label{display:grid;gap:.25rem;font-size:.85rem;color:var(--mut)}
+.tools input,.tools select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--mut);min-height:44px;padding:0 .7rem}
+.tools input{min-width:min(100%,280px)}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{display:grid;grid-template-columns:96px 1fr;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line);align-items:start}
+.rows img{width:96px;aspect-ratio:1;object-fit:cover;background:var(--surf)}
+.rows a{font:600 1.1rem var(--serif);color:var(--ink)}
+.rows p{margin:.2rem 0 0;font-size:.93rem;color:var(--mut)}
+.ficha{display:grid;gap:2rem;padding-top:1.5rem}
+@media(min-width:900px){.ficha{grid-template-columns:7fr 4fr}}
+.crumb{font-size:.88rem;color:var(--mut);padding-top:1.5rem}
+.crumb a{color:var(--mut)}
+dl.meta{margin:0;display:grid;gap:.9rem}
+dl.meta div{border-top:1px solid var(--line);padding-top:.6rem}
+dl.meta dt{font:600 .75rem var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+dl.meta dd{margin:.15rem 0 0}
+.zoomable{display:block;position:relative;background:var(--surf);width:100%;padding:0;border:0;cursor:zoom-in}
+.zoomable img{margin:0 auto;max-height:80vh;width:auto;max-width:100%}
+.zb{margin-top:.6rem}
+.cmp{position:relative;overflow:hidden;background:var(--surf)}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover}
+.cmp .top{clip-path:inset(0 calc(100% - var(--p,0%)) 0 0)}
+.cmp .line{position:absolute;top:0;bottom:0;left:var(--p,0%);width:3px;margin-left:-1.5px;background:var(--onacc);box-shadow:0 0 0 1px var(--ink);pointer-events:none}
+.dbar{display:grid;grid-template-columns:auto 1fr auto;gap:.8rem;align-items:center;padding:.7rem 1rem;padding-bottom:calc(.7rem + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--bg)}
+.dbar[hidden]{display:none}
+.dbar b{font:600 .85rem var(--sans);letter-spacing:.08em;text-transform:uppercase}
+.dbar input{width:100%;height:44px;margin:0;accent-color:var(--acc);touch-action:pan-y;cursor:ew-resize}
+.dbar small{grid-column:1/-1;color:var(--mut);font-size:.85rem}
+#lbw{margin:0 auto}#lbw>img{width:100%;height:auto}
+.empty{border:1px dashed var(--mut);padding:2rem clamp(1rem,3vw,2rem);background:var(--surf)}
+.empty h3{margin-bottom:.6rem}
+.empty ul{margin:0 0 1rem;padding-left:1.2rem}
+.tl{list-style:none;margin:0;padding:0 0 0 1.4rem;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:0 0 2rem 1rem}
+.tl li::before{content:"";position:absolute;left:calc(-1.4rem - 7px);top:.55rem;width:12px;height:12px;background:var(--acc);border:2px solid var(--bg)}
+.tl .y{font:600 1.6rem var(--serif)}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:.6rem .6rem .6rem 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .75rem var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.tscroll{overflow-x:auto}
+dialog{border:0;padding:0;width:100vw;max-width:100vw;height:100vh;height:100dvh;max-height:100dvh;background:var(--bg);color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.7)}
+dialog[open]{display:flex;flex-direction:column}
+.dh{display:flex;gap:.6rem;align-items:center;padding:.6rem 1rem;padding-top:calc(.6rem + env(safe-area-inset-top,0px));border-bottom:1px solid var(--line)}
+.dh h2{font-size:1.05rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dh button{min-width:44px;min-height:44px;background:none;border:1px solid var(--line);color:var(--ink);font:inherit;cursor:pointer;display:grid;place-items:center}
+.ds{flex:1;overflow:auto;background:var(--surf);padding:1rem}
+.ds img{max-width:none;margin:0 auto}
+footer.site{border-top:1px solid var(--line);padding:2rem 0 3rem;font-size:.92rem;color:var(--mut)}
+footer.site .wrap{display:grid;gap:1.5rem}
+@media(min-width:800px){footer.site .wrap{grid-template-columns:2fr 1fr}}
+footer.site ul{list-style:none;margin:0;padding:0;display:grid;gap:.3rem}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="site"><div class="wrap bar">
+<a class="brand" href="#/"><small>Archivo de memoria local</small>Memoria de Capitán Sarmiento</a>
+<button class="menu" id="menu" aria-expanded="false" aria-controls="nav"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" fill="none"/></svg>Menú</button>
+<nav id="nav" aria-label="Principal"><ul>
+<li><a href="#/">Inicio</a></li><li><a href="#/archivo">Archivo</a></li><li><a href="#/documentos">Documentos</a></li><li><a href="#/linea-de-tiempo">Línea de tiempo</a></li><li><a href="#/colecciones">Colecciones</a></li><li><a href="#/acerca">Acerca</a></li></ul></nav>
+</div></header>
+<main id="main" tabindex="-1"><div class="wrap"><noscript><p class="empty">Este archivo necesita JavaScript para mostrar las fotografías y los documentos. Activalo en tu navegador para consultarlo.</p></noscript></div></main>
+<footer class="site"><div class="wrap">
+<div><p>Archivo de memoria local de Capitán Sarmiento, provincia de Buenos Aires.</p>
+<p>Este sitio no usa cuentas, cookies ni analítica.</p></div>
+<ul aria-label="Secundaria"><li><a href="#/archivo">Archivo fotográfico</a></li><li><a href="#/documentos">Documentos</a></li><li><a href="#/acerca">Criterios documentales</a></li></ul>
+</div></footer>
+<dialog id="lb" aria-labelledby="lbt"><div class="dh"><h2 id="lbt"></h2>
+<button type="button" data-z="-1" aria-label="Alejar"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12" stroke="currentColor" stroke-width="2"/></svg></button>
+<button type="button" data-z="1" aria-label="Acercar"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12M9 3v12" stroke="currentColor" stroke-width="2"/></svg></button>
+<button type="button" id="lbc" aria-label="Cerrar"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15" stroke="currentColor" stroke-width="2"/></svg></button></div>
+<div class="ds" tabindex="0" aria-label="Imagen ampliada, desplazable"><div id="lbw"></div></div>
+<div class="dbar" id="lbb" hidden><b>Antes</b><input type="range" min="0" max="100" value="0" id="rng" aria-label="Deslizar entre la imagen antigua y la actual" aria-valuetext="0 % de la foto actual visible"><b>Ahora</b><small id="lbs"></small></div></dialog>
+<div class="sr" role="status" aria-live="polite" id="live"></div>
+<script>
+"use strict";
+const IMG={"238429": {"src": "img/238429.jpg", "w": 1600, "h": 1026}, "238430": {"src": "img/238430.jpg", "w": 1600, "h": 937}, "238432": {"src": "img/238432.jpg", "w": 1280, "h": 737}, "238428": {"src": "img/238428.jpg", "w": 1600, "h": 1125}, "238419": {"src": "img/238419.jpg", "w": 1204, "h": 1600}, "238431": {"src": "img/238431.jpg", "w": 720, "h": 429}, "238427": {"src": "img/238427.jpg", "w": 267, "h": 188}, "238424": {"src": "img/238424.jpg", "w": 280, "h": 179}, "238422": {"src": "img/238422.jpg", "w": 280, "h": 157}, "238384": {"src": "img/238384.jpg", "w": 275, "h": 400}, "238386": {"src": "img/238386.jpg", "w": 280, "h": 246}, "238385": {"src": "img/238385.jpg", "w": 280, "h": 264}, "238383": {"src": "img/238383.jpg", "w": 280, "h": 168}};
+const P=[
+{s:"calle-arbolada-con-comercios",f:"238429",t:"Calle arbolada con tienda, peluquería, hotel y fiambrería",col:"Calles y plazas",ft:1,
+pl:"Calle arbolada con comercios",pa:"Sin identificar; falta confirmar cuál es",
+alt:"Vista desde un piso alto de una calle ancha con árboles podados y bancos; hay un carro con caballo, automóviles antiguos y comercios con carteles a ambos lados.",
+d:"Vista desde un piso alto de una calle ancha con árboles podados y bancos en el sector de la derecha. A la izquierda, un edificio con carteles de «Tienda» —con la lista de secciones: tejidos, mercería, ropería, confecciones, zapatería, sombrerería, sastrería y mueblería— y de «Peluquería». A la derecha se leen «Hotel La Paz», «Fiambrería» y «Mueblería». En la calle hay un carro con caballo y automóviles de modelo antiguo. Al fondo, un edificio de dos plantas con techo de tejas."},
+{s:"estacion-ferroviaria",f:"238430",t:"Estación ferroviaria con una locomotora a vapor",col:"Ferrocarril",ft:1,
+pl:"Estación de ferrocarril",pa:"Probable estación Capitán Sarmiento; falta confirmarlo",
+alt:"Andén de una estación con un edificio de dos plantas y techo de tejas, una locomotora a vapor con humo a la derecha, vagones, personas esperando y postes blancos en primer plano.",
+d:"Vista del andén de una estación de ferrocarril. A la derecha, una locomotora a vapor suelta humo junto a varios vagones, y un grupo de personas espera cerca del edificio. El edificio principal tiene dos plantas, techo de tejas a cuatro aguas y una galería cubierta sobre el andén. En primer plano, una línea de postes blancos; a la izquierda, una hilera de árboles y una pequeña garita. El pueblo nació junto a la estación, habilitada en 1882, por lo que es probable que sea esa, pero falta confirmarlo."},
+{s:"calle-de-tierra-el-fuego",f:"238432",t:"Calle de tierra con árboles jóvenes, frente a la mueblería «El Fuego»",col:"Calles y plazas",ft:1,
+pl:"Calle de tierra con comercios",pa:"Sin identificar; falta confirmar cuál es",
+alt:"Calle de tierra con árboles jóvenes y bancos; a la izquierda un comercio con el cartel «El Fuego» y, en el centro, un grupo de personas conversando junto a un banco.",
+d:"Calle de tierra con árboles jóvenes, bancos y postes. A la izquierda, un comercio con los carteles «El Fuego» y, cortado por el borde de la foto, «…UEBLERÍA». En el centro, un grupo de personas conversa junto a un banco. Al fondo se ve un edificio de dos plantas con techo de tejas."},
+{s:"acto-publico-esquina-1905",f:"238428",t:"Acto público frente a una esquina, con oradores en la azotea",col:"Edificios y esquinas",ft:1,
+pl:"Esquina con un edificio que lleva «1905» en la cornisa",pa:"Sin identificar; falta confirmar cuál es",
+alt:"Multitud con banderas y papel picado frente a un edificio de esquina; en la azotea hay tres personas junto a un molino de viento y en la cornisa se lee 1905.",
+d:"Multitud con banderas y lluvia de papel picado frente a un edificio de esquina. Sobre la azotea, tras la baranda, un hombre parece hablar desde un atril junto a otras dos personas, y se ve un molino de viento. En la cornisa del edificio se lee «1905», año inscripto en la construcción. La fecha del acto es desconocida; por el estilo de la fotografía y la ropa parece de mediados del siglo XX, sin confirmar."},
+{s:"banco-de-la-nacion-argentina",f:"238419",t:"Banco de la Nación Argentina, edificio de esquina",col:"Edificios y esquinas",ft:1,
+pl:"Esquina del Banco de la Nación Argentina",pa:"Probable sucursal de Capitán Sarmiento; falta confirmarlo",
+alt:"Edificio de esquina de dos plantas con ingreso en la ochava y la inscripción «Banco de la Nación Argentina» en el frontón de la puerta.",
+d:"Edificio de esquina de dos plantas con ingreso por la ochava, bajo un frontón con la inscripción «Banco de la Nación Argentina». En planta baja tiene ventanas con arco y rejas; en la alta, balcones con barandas. La imagen está desvanecida en los bordes."},
+{s:"iglesia-frente-a-un-descampado",f:"238431",t:"Iglesia con campanario frente a un terreno abierto",col:"Edificios y esquinas",
+pl:"Iglesia frente a un terreno abierto",pa:"Posible Iglesia San Carlos Borromeo; falta confirmarlo",
+alt:"Iglesia de campanario al fondo de un terreno abierto, con un automóvil antiguo, un carro con caballo, personas y un ciclista en primer plano.",
+d:"Una iglesia de nave baja y campanario al fondo, frente a un terreno abierto de tierra. En primer plano hay un automóvil antiguo, un carro con caballo, personas a pie y un ciclista. Según fundamentos de proyectos de la Legislatura bonaerense, la primera plaza pública del pueblo estuvo frente a la Iglesia San Carlos Borromeo; podría ser ese lugar, pero falta confirmarlo."},
+{s:"iglesia-de-torre-con-ciclista",f:"238427",t:"Calle ancha con una iglesia de torre alta y un ciclista",col:"Edificios y esquinas",
+pl:"Calle con una iglesia de torre",pa:"Posible Iglesia San Carlos Borromeo; falta confirmarlo",
+alt:"Calle ancha con una iglesia de torre alta con campanario a un costado, una columna de alumbrado y un ciclista.",
+d:"Calle ancha con una iglesia de torre alta, con campanario y chapitel, a un costado; una columna de alumbrado con farola y un ciclista sobre el pavimento. Al fondo, un edificio bajo. Imagen de baja resolución."},
+{s:"sala-de-lectura",f:"238424",t:"Personas leyendo en una sala con bibliotecas vidriadas",col:"Otras imágenes",
+pl:"Sala de lectura",pa:"Sin identificar",
+alt:"Personas sentadas a una mesa larga leyendo, en una sala con bibliotecas de puertas vidriadas y un cuadro en la pared.",
+d:"Varias personas sentadas a una mesa larga leen o escriben en una sala con bibliotecas de puertas vidriadas; en la pared hay un cuadro. Es la reproducción de una imagen impresa, con marco decorativo. Apareció encabezando un texto sobre un artículo de «Caras y Caretas» de 1932 dedicado al pueblo; no se confirmó el vínculo ni de qué sala se trata."},
+{s:"rancho-con-caballos-y-aves",f:"238422",t:"Rancho de techo de paja con caballos y aves",col:"Otras imágenes",
+pl:"Rancho en el campo",pa:"Sin identificar; falta confirmar que sea de Capitán Sarmiento",
+alt:"Rancho de techo de paja en el campo, con caballos, una persona montada, un carro y una fila de aves blancas en primer plano.",
+d:"Rancho de paredes bajas y techo de paja en el campo, con caballos —uno con un jinete— y un carro a un lado, y una fila de aves blancas en primer plano. Es la reproducción de una fotografía con marco negro. No se sabe dónde se tomó."}
+];
+const DOC=[
+{s:"cierre-de-libro-de-bautismos",f:"238383",t:"Nota de cierre de un libro de bautismos (1823–1836)",ty:"Registro parroquial manuscrito",date:"1823–1836",yr:1823,dc:"Intervalo: fecha de inicio del libro y fecha de la nota, leídas del texto",
+alt:"Nota manuscrita en tinta que menciona el 23 de julio de 1823 y el 28 de diciembre de 1836, con una rúbrica y la inscripción «Cura y Vicario».",
+d:"Nota manuscrita de cierre de un libro de bautismos que comenzó el 23 de julio de 1823. La nota lleva la fecha 28 de diciembre de 1836 y la firma un cura y vicario. El resto del texto aún no fue transcripto. Es anterior a la estación y al pueblo (1882), así que falta confirmar de qué parroquia es el libro."},
+{s:"bautismo-1898",f:"238384",t:"Partida de bautismo de Flora Olinda, 1898",ty:"Registro parroquial",date:"4 de abril de 1898",yr:1898,dc:"Fecha leída del texto manuscrito; falta revisión humana",
+alt:"Acta de bautismo con encabezado impreso del Partido de Arrecifes y la Capellanía de San Carlos de Capitán Sarmiento; el nombre Flora Olinda está anotado a mano en el margen.",
+d:"Acta del Libro de Bautismos del Partido de Arrecifes, Capellanía de San Carlos de Capitán Sarmiento. El capellán bautiza a Flora Olinda, nacida el 7 de noviembre de 1897, hija legítima de un matrimonio domiciliado en el partido; figuran dos padrinos y la firma del capellán. El nombre de la niña está anotado a mano en el margen izquierdo. El último dígito del año impreso en el encabezado está tapado por una anotación."},
+{s:"matrimonio-1903",f:"238385",t:"Certificado de matrimonio, expediente 108 (1903)",ty:"Certificado manuscrito",date:"1903",yr:1903,dc:"Año leído del texto; el mes no se lee con seguridad",
+alt:"Certificado manuscrito con el encabezado «Exp. mat. N.º 108», dos firmas y un sello circular en el ángulo inferior izquierdo.",
+d:"Certificado manuscrito encabezado «Exp. mat. N.º 108» (expediente matrimonial). Certifica que dos personas, de 21 y 23 años, contrajeron matrimonio, y nombra a los padres de ambos. Está fechado el día 16 de un mes que no se lee con seguridad de 1903, lleva dos firmas y un sello circular que parece de la Provincia de Buenos Aires."},
+{s:"bautismo-1920",f:"238386",t:"Partida de bautismo de 1920, Capellanía Vicaría de Capitán Sarmiento",ty:"Registro parroquial",date:"4 de diciembre de 1920",yr:1920,dc:"Fecha leída del texto; falta revisión humana",
+alt:"Acta de bautismo sobre formulario impreso de la Capellanía Vicaría de Capitán Sarmiento, año 1920, folio 465, con texto manuscrito, firma al pie y nombre anotado en el margen.",
+d:"Acta de bautismo sobre un formulario impreso de la Capellanía Vicaría de Capitán Sarmiento (año 1920, folio 465). Registra el bautismo de una niña nacida en julio de 1920, hija legítima de un matrimonio —el padre natural de Buenos Aires y la madre de este pueblo—, con dos padrinos y la firma del cura de la parroquia. Nombre y apellido están anotados a mano en el margen izquierdo."}
+];
+const LEG="Fuente: fundamentos de proyectos de la Honorable Cámara de Diputados de la Provincia de Buenos Aires.";
+const H=[
+{yr:1882,date:"1882",t:"Se habilita la estación Capitán Sarmiento",d:"Pertenecía al Ferrocarril Oeste y estaba en la línea entre San Antonio de Areco y Pergamino. El pueblo se formó alrededor de la estación, con un comercio frente a ella. La fundación se celebra el 1.º de mayo.",dc:"Año según la fuente",src:LEG},
+{yr:1961,date:"19 de junio de 1961",t:"Se crea el Partido de Capitán Sarmiento",d:"Lo establece la ley provincial 6485.",dc:"Fecha según la fuente",src:LEG},
+{yr:1888,date:"22 de junio de 1888",t:"Remate de la sucesión de Félix Urioste",d:"Entre quienes compraron terrenos en el lugar figuraba Melchor Aramburu.",dc:"Fecha exacta según la fuente"},
+{yr:1892,date:"1892",t:"Muerte de Gerardo Gómez",d:"Reconocido oficialmente como fundador de Capitán Sarmiento. Había sido propietario de al menos 40 terrenos cerca de la estación ferroviaria.",dc:"Año según la fuente"},
+{yr:1898,date:"1898",t:"Mensura del pueblo",d:"Para medir el pueblo se tomaron como referencia dos casas de ladrillo: una ocupada por Opizzi y otra por un señor Neyra, en el campo de Balbina de Urioste. La fuente consultada lo cita de un trabajo de Álvaro Gutiérrez Zaldívar.",dc:"Año según la fuente"},
+{yr:1932,date:"19 de marzo de 1932",t:"Artículo sobre Capitán Sarmiento en «Caras y Caretas»",d:"Edición n.º 1.746, con firma de Juan José de Soiza Reilly. Describe al pueblo como dividido por las vías del tren en dos sectores de carácter distinto.",dc:"Fecha exacta según la fuente"}
+];
+const SRC="Fuente secundaria: blog «Primeros pobladores de Capitán Sarmiento», de Daniel C. Bilbao. Sin verificar contra el documento original.";
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const dl=it=>it.date?it.date:"Fecha desconocida";
+const img=(it,o={})=>{const m=IMG[it.f]||{src:"",w:4,h:3};return `<img src="${m.src}" width="${m.w}" height="${m.h}" alt="${esc(o.alt===undefined?it.alt:o.alt)}" ${o.eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">`};
+const card=(it,o={})=>`<a class="ph" href="#/foto/${it.s}">${img(it,o)}<span class="cap"><b>${esc(it.t)}</b><small>${esc(dl(it))}</small></span></a>`;
+const meta=(it,doc)=>{const r=[["Fecha",it.date?`${it.date} (${it.dc||"por confirmar"})`:"Fecha desconocida"],doc?["Tipo",it.ty]:["Lugar",it.pl],doc?null:["Ubicación",it.pa],doc?null:["Colección",it.col],];
+if(doc)r.push(["Transcripción","Pendiente. Se publicará solo cuando una persona la prepare y la revise."]);
+return `<dl class="meta">${r.filter(Boolean).map(([k,v])=>`<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>`};
+const crumb=(a,b)=>`<nav class="crumb wrap" aria-label="Ruta"><a href="#/">Inicio</a> / <a href="${a[1]}">${a[0]}</a> / <span>${esc(b)}</span></nav>`;
+const wrap=h=>`<div class="wrap">${h}</div>`;
+const ficha=(it,doc)=>{const ph=IMG[it.f]||{};return crumb(doc?["Documentos","#/documentos"]:["Archivo","#/archivo"],it.t)+wrap(`<article class="ficha"><div><button type="button" class="zoomable" data-open="${it.f}" data-title="${esc(it.t)}" aria-label="Ampliar imagen: ${esc(it.t)}">${img(it)}</button>
+<p class="zb"><button type="button" class="btn sm ghost" data-open="${it.f}" data-title="${esc(it.t)}">${it.now?"Ampliar y comparar con hoy":"Ver en tamaño grande"}</button></p>${it.now?'<p style="font-size:.9rem;color:var(--mut)">Al ampliar la imagen aparece una barra para pasar de la foto antigua a la actual.</p>':""}
+${doc?'<p style="font-size:.9rem;color:var(--mut)">La imagen se muestra completa, sin recortes.</p>':""}</div>
+<div><h1 style="font-size:clamp(1.7rem,4vw,2.4rem)">${esc(it.t)}</h1><p style="margin-top:1rem">${esc(it.d)}</p>${meta(it,doc)}</div></article>`)};
+let q="",colF="";
+const R={};
+R.home=()=>{const f=P.filter(x=>x.ft);return wrap(`<section class="hero"><div><p class="kick">Archivo fotográfico y documental</p><h1>Memoria de Capitán Sarmiento</h1>
+<p class="lead" style="margin-top:1.2rem">Fotografías y documentos para consultar, comparar y conservar la historia de Capitán Sarmiento, en la provincia de Buenos Aires.</p>
+<div class="acts"><a class="btn" href="#/archivo">Explorar el archivo</a><a class="btn ghost" href="#/linea-de-tiempo">Línea de tiempo</a></div></div>
+<figure><a href="#/foto/${f[0].s}" class="ph">${img(f[0],{eager:1})}</a><figcaption>${esc(f[0].t)} · ${dl(f[0])}</figcaption></figure></section>
+<section class="sec"><div class="head"><h2>Selección de fotografías</h2><a href="#/archivo">Ver las ${P.length} fotografías</a></div><div class="pick">${f.slice(1).map(x=>card(x)).join("")}</div></section>
+<section class="sec"><div class="head"><h2>Documentos</h2><a href="#/documentos">Ver los ${DOC.length} documentos</a></div><ul class="rows">${DOC.slice(0,2).map(docRow).join("")}</ul></section>
+<section class="sec"><h2>Acerca del archivo</h2><p style="margin-top:1rem">Es un proyecto de memoria local. Cada material indica qué se sabe y qué falta confirmar: cuando una fecha, un lugar o un crédito no están documentados, se dice. <a href="#/acerca">Leer los criterios documentales</a>.</p></section>`)};
+const docRow=d=>`<li><a href="#/documento/${d.s}" tabindex="-1" aria-hidden="true">${img(d,{alt:""})}</a><div><a href="#/documento/${d.s}">${esc(d.t)}</a><p>${esc(d.ty)} · ${esc(dl(d))} · Transcripción pendiente</p></div></li>`;
+R.archivo=()=>wrap(`<h1 style="padding-top:2rem">Archivo fotográfico</h1><p class="lead" style="margin:1rem 0 1.5rem">Fotografías ordenadas por selección editorial. Todavía no hay fechas confirmadas, por eso no se filtra por época.</p>
+<form class="tools" role="search" onsubmit="return false"><label>Buscar<input type="search" id="q" value="${esc(q)}" placeholder="Título, descripción o lugar"></label>
+<label>Colección<select id="col"><option value="">Todas</option>${[...new Set(P.map(x=>x.col))].map(c=>`<option ${c===colF?"selected":""}>${esc(c)}</option>`).join("")}</select></label>
+<button type="button" class="btn sm ghost" id="rst">Restablecer</button></form><div id="res"></div>`);
+const fil=()=>{const n=q.trim().toLowerCase();const r=P.filter(x=>(!colF||x.col===colF)&&(!n||[x.t,x.d,x.pl,x.col].join(" ").toLowerCase().includes(n)));
+$("#res").innerHTML=r.length?`<div class="grid">${r.map(x=>card(x)).join("")}</div>`:`<div class="empty"><h3>Sin resultados</h3><p>Ninguna fotografía coincide con la búsqueda. Probá con otra palabra o restablecé los filtros.</p></div>`;
+$("#live").textContent=`${r.length} ${r.length===1?"fotografía":"fotografías"}`};
+R.documentos=()=>wrap(`<h1 style="padding-top:2rem">Documentos históricos</h1><p class="lead" style="margin:1rem 0">Se muestran las imágenes completas de los originales. Las transcripciones se publicarán solo después de una revisión humana; mientras tanto figuran como pendientes.</p><ul class="rows">${DOC.map(docRow).join("")}</ul>`);
+R.tl=()=>{const d=[...P,...DOC].filter(x=>x.date),u=[...P,...DOC].length-d.length;const e=[...d.map(x=>({...x,lk:`#/${x.ty?"documento":"foto"}/${x.s}`,why:""})),...H.map(x=>({...x,why:x.src||SRC}))].sort((a,b)=>a.yr-b.yr);
+return wrap(`<h1 style="padding-top:2rem">Línea de tiempo</h1><p class="lead" style="margin:1rem 0 2rem">Solo aparecen hechos y materiales con una fecha respaldada por el propio documento o por una fuente citada. Una estimación nunca se presenta como fecha exacta.</p>
+<ol class="tl">${e.map(x=>`<li><div class="y">${esc(x.date)}</div><p style="margin:.2rem 0">${x.lk?`<a href="${x.lk}">${esc(x.t)}</a>`:`<b>${esc(x.t)}</b>`}</p>${x.lk?"":`<p style="margin:.2rem 0">${esc(x.d)}</p>`}<p style="font-size:.92rem;color:var(--mut)">${esc(x.dc)}.${x.why?" "+esc(x.why):""}</p></li>`).join("")}</ol>
+<div class="empty"><h3>${u} materiales sin fecha confirmada</h3><p>Siguen disponibles en el archivo, pero no se ubican en una fecha arbitraria. A medida que se documenten, se sumarán acá.</p><p><a class="btn sm" href="#/archivo">Ir al archivo</a></p></div>`)};
+R.col=()=>{const cs=[...new Set(P.map(x=>x.col))];
+return wrap(`<h1 style="padding-top:2rem">Lugares y colecciones</h1><p class="lead" style="margin:1rem 0 2rem">Las colecciones agrupan materiales por lo que se ve en ellos. No implican una valoración histórica.</p>
+${cs.map(c=>`<section class="sec"><h2>${esc(c)}</h2><div class="pick" style="margin-top:1.2rem">${P.filter(x=>x.col===c).map(x=>card(x)).join("")}</div></section>`).join("")}
+<section class="sec"><h2>Lugares</h2><p style="margin-top:1rem">Ningún lugar está confirmado todavía, por eso no hay mapa.</p><div class="tscroll"><table><thead><tr><th>Lugar</th><th>Ubicación</th><th>Material</th></tr></thead><tbody>${P.map(x=>`<tr><td>${esc(x.pl)}</td><td>${esc(x.pa)}</td><td><a href="#/foto/${x.s}">${esc(x.t)}</a></td></tr>`).join("")}</tbody></table></div></section>`)};
+R.acerca=()=>wrap(`<h1 style="padding-top:2rem">Acerca del archivo</h1><div style="margin-top:1.5rem"><h2>Propósito</h2><p style="margin-top:.6rem">Reunir en un solo lugar fotografías y documentos de Capitán Sarmiento para que cualquiera pueda consultarlos sin registrarse.</p>
+<h2 style="margin-top:2rem">Cómo se describe el material</h2><p style="margin-top:.6rem">Las descripciones cuentan solo lo que se ve o se lee en cada imagen. Cuando falta una fecha, un lugar, un autor o un crédito, la ficha lo indica en lugar de completarlo por suposición.</p>
+<h2 style="margin-top:2rem">Incertidumbres</h2><p style="margin-top:.6rem">Una fecha puede ser exacta, aproximada, un intervalo, atribuida o desconocida. Una fecha atribuida, como el año impreso en el encabezado de un registro, no se toma como la fecha completa del hecho.</p>
+<h2 style="margin-top:2rem">Originales y retoques</h2><p style="margin-top:.6rem">Las imágenes no se colorean, restauran ni reconstruyen. Las copias de consulta no incluyen metadatos privados.</p>
+<h2 style="margin-top:2rem">Fuentes consultadas</h2><p style="margin-top:.6rem">Algunos hechos de la línea de tiempo provienen del blog «Primeros pobladores de Capitán Sarmiento», de Daniel C. Bilbao (<a href="https://pobladores-capitan-sarmiento.blogspot.com/" rel="noopener">pobladores-capitan-sarmiento.blogspot.com</a>), que se centra en el período 1870 a 1900. Se resumen con sus palabras y se marcan como fuente secundaria. Los textos y las imágenes de ese blog pertenecen a su autor y a quienes los aportaron.</p>
+<h2 style="margin-top:2rem">Otras fuentes</h2><p style="margin-top:.6rem">Los hitos de 1882 y 1961 se toman de los fundamentos de proyectos de la Honorable Cámara de Diputados de la Provincia de Buenos Aires sobre el aniversario y la historia de la ciudad.</p></div>`);
+R.nf=()=>wrap(`<div class="empty" style="margin-top:2rem"><h1 style="font-size:2rem">No encontramos esa página</h1><p style="margin-top:1rem">Puede que el enlace esté incompleto o que el material ya no esté publicado.</p><a class="btn" href="#/">Volver al inicio</a></div>`);
+const TT={"":"Inicio",archivo:"Archivo fotográfico",documentos:"Documentos históricos","linea-de-tiempo":"Línea de tiempo",colecciones:"Lugares y colecciones",acerca:"Acerca del archivo"};
+function route(){const [a="",b]=location.hash.replace(/^#\/?/,"").split("/");let h,t=TT[a];
+if(a===""||a==="inicio")h=R.home();else if(a==="archivo")h=R.archivo();else if(a==="documentos")h=R.documentos();else if(a==="linea-de-tiempo")h=R.tl();else if(a==="colecciones")h=R.col();else if(a==="acerca")h=R.acerca();
+else if(a==="foto"||a==="documento"){const it=(a==="foto"?P:DOC).find(x=>x.s===b);if(it){h=ficha(it,a==="documento");t=it.t}}
+if(!h){h=R.nf();t="Página no encontrada"}
+$("#main").innerHTML=h;document.title=t+" · Memoria de Capitán Sarmiento";
+document.querySelectorAll("#nav a").forEach(l=>{const on=l.getAttribute("href")==="#/"+(a||""),sub=(a==="foto"&&l.hash==="#/archivo")||(a==="documento"&&l.hash==="#/documentos");on||sub?l.setAttribute("aria-current","page"):l.removeAttribute("aria-current")});
+$("#nav").classList.remove("open");$("#menu").setAttribute("aria-expanded","false");
+if(a==="archivo")fil();window.scrollTo(0,0);$("#main").focus({preventScroll:true})}
+addEventListener("hashchange",route);
+$("#menu").onclick=()=>{const o=$("#nav").classList.toggle("open");$("#menu").setAttribute("aria-expanded",o)};
+const lb=$("#lb");let opener=null,zoom=1;
+const setZ=z=>{zoom=Math.min(4,Math.max(1,z));$("#lbw").style.width=(zoom*100)+"%"};
+const setP=v=>{const c=$("#cmp");if(c)c.style.setProperty("--p",v+"%");$("#rng").setAttribute("aria-valuetext",v+" % de la foto actual visible")};
+document.addEventListener("click",e=>{const o=e.target.closest("[data-open]");if(o){opener=o;const it=[...P,...DOC].find(x=>x.f===o.dataset.open),m=IMG[o.dataset.open],n=it.now;
+$("#lbw").innerHTML=n?`<div class="cmp" id="cmp" style="aspect-ratio:${m.w}/${m.h}"><img src="${m.src}" alt="${esc(it.alt)}"><img class="top" src="${n.src}" alt="${esc(n.alt)}"><div class="line"></div></div>`:`<img src="${m.src}" alt="${esc(it.alt)}">`;
+$("#lbb").hidden=!n;if(n){$("#rng").value=0;setP(0);$("#lbs").textContent=`Antes: ${dl(it)} · Ahora: ${n.date||"fecha por indicar"}. Deslizá hacia la derecha para ver la foto actual y hacia la izquierda para volver a la antigua.`}
+$("#lbt").textContent=o.dataset.title;setZ(1);lb.showModal();return}
+const z=e.target.closest("[data-z]");if(z){setZ(zoom+Number(z.dataset.z)*.5);return}
+if(e.target.closest("#lbc"))lb.close();
+if(e.target.id==="rst"){q="";colF="";$("#q").value="";$("#col").value="";fil()}});
+lb.addEventListener("close",()=>{if(opener&&document.contains(opener))opener.focus()});
+document.addEventListener("input",e=>{if(e.target.id==="q"){q=e.target.value;fil()}else if(e.target.id==="rng")setP(e.target.value)});
+document.addEventListener("change",e=>{if(e.target.id==="col"){colF=e.target.value;fil()}});
+route();
+</script>
+</body>
+</html>
