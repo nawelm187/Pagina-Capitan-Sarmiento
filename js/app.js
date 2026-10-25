@@ -17,20 +17,25 @@ const contenedor = (html) => `<div class="wrap">${html}</div>`;
 
 /* ---------- Piezas reutilizables ---------- */
 
-function imagen(item, { alt = item.textoAlternativo, prioritaria = false } = {}) {
+// En las listas se usa la miniatura (si existe) para no gastar datos; la ficha y el visor usan la imagen completa
+function imagen(item, { alt = item.textoAlternativo, prioritaria = false, lista = false, adaptable = false } = {}) {
   const carga = prioritaria ? 'fetchpriority="high"' : 'loading="lazy"';
-  return `<img src="${item.archivo}" width="${item.ancho}" height="${item.alto}" alt="${escapar(alt)}" ${carga} decoding="async">`;
+  const archivo = lista && item.miniatura ? item.miniatura : item.archivo;
+  const conjunto = adaptable && item.miniatura
+    ? ` srcset="${item.miniatura} 640w, ${item.archivo} ${item.ancho}w" sizes="(min-width: 900px) 45vw, 100vw"`
+    : "";
+  return `<img src="${archivo}"${conjunto} width="${item.ancho}" height="${item.alto}" alt="${escapar(alt)}" ${carga} decoding="async">`;
 }
 
 function tarjeta(foto) {
   const detalle = [foto.epoca, foto.actual ? "Con foto actual" : ""].filter(Boolean).join(" · ");
-  return `<a class="ph" href="#/foto/${foto.id}">${imagen(foto, { alt: "" })}
+  return `<a class="ph" href="#/foto/${foto.id}">${imagen(foto, { alt: "", lista: true })}
     <span class="cap"><b>${escapar(foto.titulo)}</b><small>${escapar(detalle)}</small></span></a>`;
 }
 
 function filaDocumento(doc) {
   return `<li>
-    <a href="#/documento/${doc.id}" tabindex="-1" aria-hidden="true">${imagen(doc, { alt: "" })}</a>
+    <a href="#/documento/${doc.id}" tabindex="-1" aria-hidden="true">${imagen(doc, { alt: "", lista: true })}</a>
     <div>
       <a href="#/documento/${doc.id}">${escapar(doc.titulo)}</a>
       <p>${escapar(doc.tipo)}</p>
@@ -62,7 +67,7 @@ function paginaInicio() {
           </div>
         </div>
         <figure>
-          <a href="#/foto/${principal.id}" class="ph">${imagen(principal, { prioritaria: true })}</a>
+          <a href="#/foto/${principal.id}" class="ph">${imagen(principal, { prioritaria: true, adaptable: true })}</a>
           <figcaption>${escapar(principal.titulo)}</figcaption>
         </figure>
       </section>
@@ -138,11 +143,13 @@ function paginaArchivo() {
         <button type="button" class="btn sm ghost" id="rst">Restablecer</button>
         <p class="aviso" id="aviso-busqueda" role="status" hidden></p>
       </form>
+      <p class="nota">«Buscar hablando» usa el micrófono. En algunos navegadores, como Chrome, el audio se envía a un servicio externo para convertirlo en texto. Este sitio no lo guarda.</p>
       <div id="res"></div>`),
   };
 }
 
-function actualizarResultados() {
+// Con avisar = false (al abrir la página) no se anuncia el conteo: el foco en el título ya informa dónde estás
+function actualizarResultados(avisar = true) {
   const texto = filtro.texto.trim().toLowerCase();
   const coincide = (foto) =>
     (!filtro.coleccion || foto.coleccion === filtro.coleccion) &&
@@ -151,8 +158,8 @@ function actualizarResultados() {
 
   $("#res").innerHTML = resultado.length
     ? `<div class="grid">${resultado.map(tarjeta).join("")}</div>`
-    : `<div class="empty"><h3>Sin resultados</h3><p>Ninguna fotografía coincide con la búsqueda. Probá con otra palabra o restablecé los filtros.</p></div>`;
-  $("#live").textContent = `${resultado.length} ${resultado.length === 1 ? "fotografía" : "fotografías"}`;
+    : `<div class="empty"><h2>Sin resultados</h2><p>Ninguna fotografía coincide con la búsqueda. Probá con otra palabra o restablecé los filtros.</p></div>`;
+  if (avisar) anunciar(`${resultado.length} ${resultado.length === 1 ? "fotografía" : "fotografías"}`);
 }
 
 function reiniciarFiltros() {
@@ -188,7 +195,6 @@ function actualizarHistoria() {
   if (!texto || !boton) return;
   texto.innerHTML = htmlSeccionesHistoria();
   boton.textContent = textoBotonFacil();
-  boton.setAttribute("aria-pressed", String(ajustes.facil));
   $("#aviso-facil").hidden = !ajustes.facil;
 }
 
@@ -208,7 +214,7 @@ function paginaHistoria() {
       <h1 class="titulo-pagina">Historia de Capitán Sarmiento</h1>
       <p class="lead intro">De las estancias del siglo XVIII a la Bandera Bonaerense, con los hechos que se pueden fechar. La línea de tiempo los ordena año por año.</p>
       <p class="herramientas-texto">
-        <button type="button" class="btn sm ghost" id="alternar-facil" aria-pressed="${ajustes.facil}">${textoBotonFacil()}</button>
+        <button type="button" class="btn sm ghost" id="alternar-facil">${textoBotonFacil()}</button>
         <a href="#/glosario">Palabras difíciles: ver el glosario</a>
       </p>
       <p class="nota" id="aviso-facil" ${ajustes.facil ? "" : "hidden"}>Estás leyendo la versión de lectura fácil: frases cortas y una idea por frase.</p>
@@ -244,7 +250,14 @@ function paginaGlosario() {
   };
 }
 
-function paginaLineaDeTiempo() {
+/* ---------- Línea de tiempo horizontal ----------
+   Los años están sobre una línea que se arrastra, se desplaza con el dedo o se recorre con las flechas.
+   Al elegir un año se muestra, debajo, todo lo que pasó ese año. */
+
+let LINEA = { anios: [], porAnio: new Map() };
+
+// Hechos de HITOS y documentos con fecha, ordenados por año
+function eventosDeLaLinea() {
   const delArchivo = DOCUMENTOS.filter((doc) => doc.fecha).map((doc) => ({
     anio: doc.anio,
     fecha: doc.fecha,
@@ -253,15 +266,52 @@ function paginaLineaDeTiempo() {
     descripcion: "Documento del archivo.",
   }));
   // sort es estable: a igual año se respeta el orden de datos.js
-  const eventos = [...HITOS, ...delArchivo].sort((a, b) => a.anio - b.anio);
+  return [...HITOS, ...delArchivo].sort((a, b) => a.anio - b.anio);
+}
 
-  const filas = eventos.map((evento, indice) => {
+const textoHechos = (cantidad) => `${cantidad} ${cantidad === 1 ? "hecho" : "hechos"}`;
+
+function htmlEventosDelAnio(anio, lista) {
+  const hechos = lista.map((evento) => {
+    const titulo = evento.enlace
+      ? `<a href="${evento.enlace}">${escapar(evento.titulo)}</a>`
+      : escapar(evento.titulo);
+    return `<article class="hecho-anio">
+      <p class="fecha">${escapar(evento.fecha)}</p>
+      <h3>${titulo}</h3>
+      <p>${escapar(evento.descripcion)}</p>
+    </article>`;
+  });
+  return `<h2>${anio}</h2><p class="cuenta-anio">${textoHechos(lista.length)} en este año</p>${hechos.join("")}`;
+}
+
+function paginaLineaDeTiempo(id) {
+  const eventos = eventosDeLaLinea();
+  const porAnio = new Map();
+  for (const evento of eventos) porAnio.set(evento.anio, [...(porAnio.get(evento.anio) || []), evento]);
+  const anios = [...porAnio.keys()];
+  LINEA = { anios, porAnio };
+  const elegido = anios.includes(Number(id)) ? Number(id) : anios[0];
+  const sinFecha = TODOS.filter((item) => !item.fecha).length;
+
+  const tabs = anios.map((anio, indice) => {
+    const cantidad = porAnio.get(anio).length;
+    const activo = anio === elegido;
+    // Los años muy separados dejan más espacio en la línea (hasta 40 años de diferencia)
+    const salto = indice === 0 ? 0 : Math.min(40, anio - anios[indice - 1]);
+    return `<button type="button" role="tab" class="anio-tab" id="anio-${anio}" data-anio="${anio}"
+      aria-selected="${activo}" aria-controls="panel-anio" tabindex="${activo ? 0 : -1}"
+      aria-label="${anio}, ${textoHechos(cantidad)}" data-cuenta="${cantidad > 1 ? cantidad : ""}" style="--salto:${salto}">
+      <span class="punto" aria-hidden="true"></span><span class="anio">${anio}</span></button>`;
+  });
+
+  const filas = eventos.map((evento) => {
     const titulo = evento.enlace
       ? `<a href="${evento.enlace}">${escapar(evento.titulo)}</a>`
       : escapar(evento.titulo);
     return `<li>
       <p class="fecha">${escapar(evento.fecha)}</p>
-      <h2 class="hecho" id="hecho-${indice}" tabindex="-1">${titulo}</h2>
+      <h2 class="hecho">${titulo}</h2>
       <p>${escapar(evento.descripcion)}</p>
     </li>`;
   });
@@ -271,11 +321,72 @@ function paginaLineaDeTiempo() {
     html: contenedor(`
       <h1 class="titulo-pagina">Línea de tiempo</h1>
       <p class="lead intro">Hechos de la historia de Capitán Sarmiento con fecha documentada, y los documentos del archivo que la tienen.</p>
-      <p class="indice"><label>Ir a una fecha
-        <select id="ir-a-hito" data-destino="hecho"><option value="">Elegí una fecha</option>${eventos.map((evento, indice) => `<option value="${indice}">${escapar(evento.fecha)}: ${escapar(evento.titulo)}</option>`).join("")}</select></label></p>
-      <ol class="tl">${filas.join("")}</ol>`),
+      <p class="nota">Elegí un año en la línea, arrastrala hacia los costados o usá los botones. Abajo aparece todo lo que pasó ese año. Los números marcan los años con más de un hecho.</p>
+      <div class="cronologia-controles">
+        <button type="button" class="btn sm ghost" id="anio-anterior"><span aria-hidden="true">←</span> Año anterior</button>
+        <button type="button" class="btn sm ghost" id="anio-siguiente">Año siguiente <span aria-hidden="true">→</span></button>
+      </div>
+      <div class="pista" id="pista" role="region" aria-label="Línea de tiempo: años, de izquierda a derecha">
+        <div class="anios" role="tablist" aria-label="Años" aria-orientation="horizontal">${tabs.join("")}</div>
+      </div>
+      <section class="panel-anio" id="panel-anio" role="tabpanel" aria-labelledby="anio-${elegido}">${htmlEventosDelAnio(elegido, porAnio.get(elegido))}</section>
+      <details class="lista-completa">
+        <summary>Ver todos los hechos en una lista</summary>
+        <ol class="tl">${filas.join("")}</ol>
+      </details>
+      <div class="empty">
+        <h2>${sinFecha} materiales sin fecha confirmada</h2>
+        <p>Siguen disponibles en el archivo, pero no se ubican en una fecha arbitraria. A medida que se documenten, se sumarán acá.</p>
+        <p><a class="btn sm" href="#/archivo">Ir al archivo</a></p>
+      </div>`),
   };
 }
+
+// Deja el año elegido en el centro de la línea
+function centrarEnPista(tab) {
+  const pista = $("#pista");
+  if (pista && tab) pista.scrollLeft = tab.offsetLeft - (pista.clientWidth - tab.offsetWidth) / 2;
+}
+
+function elegirAnio(anio, { enfocar = false, avisar = false } = {}) {
+  const lista = LINEA.porAnio.get(anio);
+  if (!lista) return;
+  document.querySelectorAll(".anio-tab").forEach((tab) => {
+    const activo = Number(tab.dataset.anio) === anio;
+    tab.setAttribute("aria-selected", String(activo));
+    tab.tabIndex = activo ? 0 : -1;
+    if (activo) {
+      centrarEnPista(tab);
+      if (enfocar) tab.focus();
+    }
+  });
+  const panelAnio = $("#panel-anio");
+  panelAnio.innerHTML = htmlEventosDelAnio(anio, lista);
+  panelAnio.setAttribute("aria-labelledby", `anio-${anio}`);
+  // La dirección guarda el año elegido para poder compartirla, sin sumar pasos al historial
+  try {
+    history.replaceState(history.state, "", `#/linea-de-tiempo/${anio}`);
+  } catch (error) {
+    // Sin acceso al historial: la línea funciona igual
+  }
+  if (avisar) anunciar(`Año ${anio}: ${textoHechos(lista.length)}`);
+}
+
+function anioElegido() {
+  const tab = $('.anio-tab[aria-selected="true"]');
+  return tab ? Number(tab.dataset.anio) : null;
+}
+
+function moverAnio(paso, opciones = {}) {
+  const indice = LINEA.anios.indexOf(anioElegido()) + paso;
+  if (indice < 0 || indice >= LINEA.anios.length) {
+    return anunciar(paso < 0 ? "Es el primer año de la línea." : "Es el último año de la línea.");
+  }
+  elegirAnio(LINEA.anios[indice], { avisar: true, ...opciones });
+}
+
+// Arrastrar la línea con el mouse (con el dedo se desplaza sola, y con el teclado se usan las flechas)
+const arrastre = { activo: false, x: 0, izquierda: 0, movido: false };
 
 function paginaColecciones() {
   const secciones = COLECCIONES.map((nombre) => `
@@ -310,6 +421,8 @@ function paginaAcerca() {
         <p>Este sitio está pensado para que cualquier persona pueda recorrerlo sola, desde un celular, una computadora o con un lector de pantalla.</p>
         <p>El botón «Accesibilidad», arriba, permite agrandar el texto, elegir fondo claro u oscuro, activar el alto contraste, usar una letra más fácil de leer, poner el texto en negrita, separar más las letras y las líneas, acortar las líneas, resaltar enlaces y títulos, usar una regla de lectura, ver las listas solo con texto, quitar los colores, agrandar los botones y el cursor, marcar con un marco grueso lo que está seleccionado con el teclado y elegir la velocidad de la voz. Hay dos «Ajustes rápidos» que combinan varias opciones con un solo toque, colores de fondo suaves, una versión de lectura fácil de Historia, un glosario y una barra de botones abajo para usar con una mano. Las elecciones quedan guardadas en ese dispositivo. La página «Cómo usar el sitio» explica cada paso.</p>
         <p>En cada página, el botón «Escuchar esta página» la lee en voz alta, si el dispositivo lo permite, y el botón «Volver» regresa a la página anterior. En las fotos que tienen su foto actual, la barra Antes / Ahora se maneja con el dedo, el mouse o el teclado, y los botones «Ver foto antigua» y «Ver foto actual» permiten cambiar sin arrastrar. Todo el sitio se puede recorrer con las teclas Tab, Enter y Escape.</p>
+        <h2>Privacidad</h2>
+        <p>Este sitio no usa cuentas, cookies, anuncios ni herramientas de análisis, y no carga letras ni programas de otros sitios. Los ajustes de accesibilidad se guardan solo en tu dispositivo. La búsqueda hablada y la lectura en voz alta usan funciones del navegador: en algunos navegadores, el audio del dictado se procesa en un servicio externo.</p>
         <h2>Declaración de accesibilidad</h2>
         <p>Este sitio se diseñó siguiendo las pautas de accesibilidad WCAG 2.2, nivel AA, y se probó con herramientas automáticas. No tuvo una auditoría externa ni fue probado por personas con todas las discapacidades, así que puede tener fallas.</p>
         <p>Limitaciones conocidas: no hay videos ni audios grabados, por eso no hay subtítulos ni lengua de señas. La lectura en voz alta y la búsqueda hablada dependen del navegador y del dispositivo. Los documentos manuscritos son imágenes y todavía no tienen transcripción; por ahora cada uno tiene una descripción de lo que dice. Las descripciones de las fotografías son breves.</p>
@@ -344,6 +457,13 @@ function paginaAyuda() {
           <li>Las fotos que dicen «Con foto actual» tienen una barra «Antes / Ahora» al verlas en grande.</li>
           <li>Deslizá la barra hacia la derecha para ver la foto actual, y hacia la izquierda para volver a la antigua.</li>
           <li>Si te cuesta deslizar, tocá «Ver foto antigua» o «Ver foto actual».</li>
+        </ul>
+        <h2>Para recorrer la línea de tiempo</h2>
+        <ul>
+          <li>Cada punto de la línea es un año. Tocá un año para ver, debajo, todo lo que pasó ese año.</li>
+          <li>Arrastrá la línea con el mouse o deslizala con el dedo. Con el teclado, usá las flechas izquierda y derecha.</li>
+          <li>Los botones «Año anterior» y «Año siguiente» pasan de un año al otro.</li>
+          <li>Al final de la página, «Ver todos los hechos en una lista» los muestra de corrido.</li>
         </ul>
         <h2>Para buscar</h2>
         <ul>
@@ -440,6 +560,7 @@ function cerrarMenu() {
 
 function mostrarPagina() {
   detenerLectura();
+  $("#live").textContent = "";
   actualizarPosicion();
 
   const [seccion = "", id] = location.hash.replace(/^#\/?/, "").split("/");
@@ -449,10 +570,10 @@ function mostrarPagina() {
 
   $("#main").innerHTML = barraPagina(esInicio) + pagina.html;
   document.title = `${pagina.titulo} · ${NOMBRE_SITIO}`;
-  $("#live").textContent = `Página: ${pagina.titulo}`;
   marcarMenu(seccion);
   cerrarMenu();
-  if (seccion === "archivo") actualizarResultados();
+  if (seccion === "archivo") actualizarResultados(false);
+  if (seccion === "linea-de-tiempo") centrarEnPista($('.anio-tab[aria-selected="true"]'));
   window.scrollTo(0, 0);
   // El foco va al título: los lectores de pantalla lo leen primero y el teclado empieza desde ahí
   const titulo = $("#main h1");
@@ -542,7 +663,13 @@ function barraPagina(esInicio) {
     ? ""
     : `<button type="button" class="btn sm ghost" id="volver"><span aria-hidden="true">←</span> ${posicion > 0 ? "Volver" : "Ir al inicio"}</button>`;
   return `<div class="wrap barra-pagina" role="group" aria-label="Herramientas de la página">${botonVolver}
-    <button type="button" class="btn sm ghost" id="escuchar" data-escuchar aria-pressed="false">Escuchar esta página</button>
+    <button type="button" class="btn sm ghost" id="escuchar" data-escuchar>Escuchar esta página</button>
+    <span class="controles-lectura" role="group" aria-label="Controles de la lectura" data-controles-lectura hidden>
+      <button type="button" class="btn sm ghost" id="lec-anterior">Anterior</button>
+      <button type="button" class="btn sm ghost" id="lec-pausa">Pausar</button>
+      <button type="button" class="btn sm ghost" id="lec-siguiente">Siguiente</button>
+      <button type="button" class="btn sm" id="lec-detener">Detener</button>
+    </span>
     <button type="button" class="btn sm ghost" id="texto-menos">Achicar texto</button>
     <button type="button" class="btn sm ghost" id="texto-mas">Agrandar texto</button>
     <p class="aviso" id="aviso-voz" role="status" hidden></p></div>`;
@@ -552,7 +679,7 @@ function barraPagina(esInicio) {
    Tamaño del texto, colores, tipografía y espaciado. Se guardan en el dispositivo. */
 
 const CLAVE_AJUSTES = "ajustes-accesibilidad";
-const OPCIONES_SI_NO = ["contraste", "grises", "facil", "fuente", "negrita", "espacio", "enlaces", "regla", "columna", "sinminiaturas", "foco", "botones", "cursor", "barrainferior"];
+const OPCIONES_SI_NO = ["contraste", "grises", "facil", "sinscroll", "fuente", "negrita", "espacio", "enlaces", "regla", "columna", "sinminiaturas", "foco", "botones", "cursor", "barrainferior"];
 const AJUSTES_POR_DEFECTO = {
   texto: "1", tema: "auto", fondo: "original", velocidad: "normal",
   ...Object.fromEntries(OPCIONES_SI_NO.map((clave) => [clave, false])),
@@ -595,6 +722,8 @@ function cargarAjustes() {
   if (!guardado) {
     // Primera visita: se respeta la preferencia de contraste del sistema
     ajustes.contraste = Boolean(window.matchMedia && matchMedia("(prefers-contrast: more)").matches);
+    // Quien pidió menos movimiento al sistema no quiere que la página se desplace sola mientras se lee
+    ajustes.sinscroll = Boolean(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
     return;
   }
   if (["1", "2", "3", "4", "5"].includes(guardado.texto)) ajustes.texto = guardado.texto;
@@ -631,6 +760,19 @@ function aplicarAjustes() {
     document.querySelectorAll(`#acc input[name="${nombre}"]`).forEach((r) => { r.checked = r.value === ajustes[nombre]; });
   }
   for (const clave of OPCIONES_SI_NO) $(`#acc-${clave}`).checked = ajustes[clave];
+  actualizarMedidasFijas();
+}
+
+// La cabecera fija y la barra inferior pueden tapar lo que recibe el foco: se mide su alto real
+// y los estilos lo usan como margen de desplazamiento (scroll-padding).
+function actualizarMedidasFijas() {
+  const estilo = document.documentElement.style;
+  const cabecera = $("header.site");
+  const barra = $("#barra-inferior");
+  estilo.setProperty("--alto-cabecera", getComputedStyle(cabecera).position === "sticky" ? `${cabecera.offsetHeight}px` : "0px");
+  estilo.setProperty("--alto-barra", barra.hidden ? "0px" : `${barra.offsetHeight}px`);
+  const controles = document.querySelector("[data-controles-lectura]");
+  estilo.setProperty("--alto-controles", controles && !controles.hidden ? `${controles.offsetHeight}px` : "0px");
 }
 
 function cambiarAjuste(campo) {
@@ -686,7 +828,10 @@ function moverRegla(y) {
 const hayVoz = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
 let lecturaVigente = 0; // cambia cada vez que se inicia o se detiene, para ignorar lecturas viejas
 let bloqueResaltado = null;
-let leyendo = false;
+let leyendo = false; // hay una lectura en curso (sonando o en pausa)
+let pausada = false;
+let bloquesLectura = []; // bloques de la lectura en curso
+let indiceBloque = 0; // bloque que se está leyendo
 
 const BLOQUES_LEIBLES = "h1, h2, h3, p, li, dt, dd, figcaption, a.ph";
 const BLOQUES_EXCLUIDOS = ".barra-pagina, .crumb, form";
@@ -720,7 +865,7 @@ function resaltarBloque(el) {
   quitarResaltado();
   bloqueResaltado = el;
   el.classList.add("leyendo");
-  if (el.scrollIntoView) el.scrollIntoView({ block: "center" });
+  if (el.scrollIntoView && !ajustes.sinscroll) el.scrollIntoView({ block: "center" });
 }
 
 function quitarResaltado() {
@@ -735,11 +880,15 @@ function vozEspanola() {
 
 function marcarLectura(activa) {
   leyendo = activa;
+  if (!activa) pausada = false;
   document.querySelectorAll("[data-escuchar]").forEach((boton) => {
-    boton.setAttribute("aria-pressed", String(activa));
     if (boton.hasAttribute("data-corto")) boton.textContent = activa ? "Detener" : "Escuchar";
     else boton.textContent = activa ? "Detener lectura" : "Escuchar esta página";
   });
+  document.querySelectorAll("[data-controles-lectura]").forEach((grupo) => { grupo.hidden = !activa; });
+  const botonPausa = $("#lec-pausa");
+  if (botonPausa) botonPausa.textContent = pausada ? "Continuar" : "Pausar";
+  actualizarMedidasFijas();
 }
 
 function mostrarAviso(texto, id = "aviso-voz") {
@@ -762,20 +911,22 @@ const AVISO_SIN_VOZ =
 const AVISO_SIN_SOPORTE =
   "Este navegador no ofrece lectura en voz alta. Probá abrir el sitio directamente en Chrome, Safari o Firefox, o usá el lector de pantalla de tu dispositivo: TalkBack en Android o VoiceOver en iPhone.";
 
-function iniciarLectura() {
+function iniciarLectura(desde = 0, reutilizar = false) {
   const identificador = ++lecturaVigente;
   mostrarAviso("");
+  if (!reutilizar) bloquesLectura = bloquesDePagina();
+  pausada = false;
   marcarLectura(true);
   speechSynthesis.cancel();
   speechSynthesis.resume();
   // Algunos navegadores ignoran un speak() que llega justo después de cancel()
-  setTimeout(() => hablar(identificador), 150);
+  setTimeout(() => hablar(identificador, desde), 150);
 }
 
-function hablar(identificador) {
+function hablar(identificador, desde) {
   if (identificador !== lecturaVigente) return;
-  const bloques = bloquesDePagina();
-  const total = bloques.reduce((suma, bloque) => suma + bloque.tramos.length, 0);
+  const pendientes = bloquesLectura.slice(desde);
+  const total = pendientes.reduce((suma, bloque) => suma + bloque.tramos.length, 0);
   const voz = vozEspanola();
   let empezo = false;
   let contador = 0;
@@ -789,7 +940,7 @@ function hablar(identificador) {
   };
 
   // Todos los tramos se encolan juntos: el navegador los lee uno tras otro
-  for (const bloque of bloques) {
+  pendientes.forEach((bloque, orden) => {
     bloque.tramos.forEach((tramo, indice) => {
       contador += 1;
       const esUltimo = contador === total;
@@ -799,7 +950,10 @@ function hablar(identificador) {
       if (voz) habla.voice = voz;
       habla.onstart = () => {
         empezo = true;
-        if (indice === 0 && identificador === lecturaVigente) resaltarBloque(bloque.el);
+        if (indice === 0 && identificador === lecturaVigente) {
+          indiceBloque = desde + orden;
+          resaltarBloque(bloque.el);
+        }
       };
       habla.onend = () => {
         if (esUltimo && identificador === lecturaVigente) {
@@ -812,10 +966,31 @@ function hablar(identificador) {
       };
       speechSynthesis.speak(habla);
     });
-  }
+  });
 
   // Si en tres segundos no empezó a sonar, se avisa en vez de quedar en silencio
   setTimeout(() => { if (!empezo) fallar(); }, 3000);
+}
+
+// Pausar se resuelve cancelando la voz y retomando desde el mismo párrafo: funciona igual en todos los navegadores
+function alternarPausa() {
+  if (!leyendo) return;
+  if (pausada) {
+    anunciar("Lectura reanudada");
+    iniciarLectura(indiceBloque, true);
+  } else {
+    lecturaVigente += 1;
+    speechSynthesis.cancel();
+    pausada = true;
+    marcarLectura(true);
+    anunciar("Lectura en pausa");
+  }
+}
+
+function saltarBloque(paso) {
+  if (!leyendo) return;
+  const nuevo = Math.min(bloquesLectura.length - 1, Math.max(0, indiceBloque + paso));
+  iniciarLectura(nuevo, true);
 }
 
 function alternarLectura() {
@@ -887,6 +1062,12 @@ const ACCIONES = {
   volver,
   escuchar: alternarLectura,
   subir: () => window.scrollTo(0, 0),
+  "anio-anterior": () => moverAnio(-1),
+  "anio-siguiente": () => moverAnio(1),
+  "lec-pausa": alternarPausa,
+  "lec-detener": detenerLectura,
+  "lec-anterior": () => saltarBloque(-1),
+  "lec-siguiente": () => saltarBloque(1),
   "texto-mas": () => cambiarTexto(1),
   "texto-menos": () => cambiarTexto(-1),
   hablar: buscarHablando,
@@ -903,6 +1084,14 @@ const ACCIONES = {
 };
 
 document.addEventListener("click", (evento) => {
+  // Después de arrastrar la línea, el clic que sigue no debe elegir un año
+  if (arrastre.movido && evento.target.closest("#pista")) {
+    arrastre.movido = false;
+    return;
+  }
+  const tab = evento.target.closest(".anio-tab");
+  if (tab) return elegirAnio(Number(tab.dataset.anio), { avisar: true });
+
   // El enlace «Saltar al contenido» no debe cambiar la dirección de la página
   if (evento.target.closest(".skip")) {
     evento.preventDefault();
@@ -948,8 +1137,44 @@ document.addEventListener("change", (evento) => {
   }
 });
 
-document.addEventListener("pointermove", (evento) => moverRegla(evento.clientY));
+document.addEventListener("pointerdown", (evento) => {
+  arrastre.movido = false;
+  const pista = evento.target.closest("#pista");
+  if (!pista || evento.pointerType === "touch" || evento.button !== 0) return;
+  Object.assign(arrastre, { activo: true, x: evento.clientX, izquierda: pista.scrollLeft });
+});
+
+document.addEventListener("pointermove", (evento) => {
+  moverRegla(evento.clientY);
+  const pista = $("#pista");
+  if (!arrastre.activo || !pista) return;
+  const desplazamiento = evento.clientX - arrastre.x;
+  if (Math.abs(desplazamiento) > 5) {
+    arrastre.movido = true;
+    pista.classList.add("arrastrando");
+  }
+  if (arrastre.movido) pista.scrollLeft = arrastre.izquierda - desplazamiento;
+});
+
+function terminarArrastre() {
+  arrastre.activo = false;
+  const pista = $("#pista");
+  if (pista) pista.classList.remove("arrastrando");
+}
+document.addEventListener("pointerup", terminarArrastre);
+document.addEventListener("pointercancel", terminarArrastre);
 document.addEventListener("touchmove", (evento) => moverRegla(evento.touches[0].clientY), { passive: true });
+
+// Años de la línea: flechas, Inicio y Fin (patrón de pestañas)
+document.addEventListener("keydown", (evento) => {
+  if (!evento.target.closest(".anio-tab")) return;
+  const destinos = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+  if (evento.key in destinos) moverAnio(destinos[evento.key], { enfocar: true });
+  else if (evento.key === "Home") elegirAnio(LINEA.anios[0], { enfocar: true, avisar: true });
+  else if (evento.key === "End") elegirAnio(LINEA.anios[LINEA.anios.length - 1], { enfocar: true, avisar: true });
+  else return;
+  evento.preventDefault();
+});
 
 // Escape cierra el menú desplegable y devuelve el foco a su botón
 document.addEventListener("keydown", (evento) => {
@@ -968,6 +1193,13 @@ visor.addEventListener("close", () => {
 
 // Al cerrar el panel de accesibilidad, el foco vuelve a su botón
 panel.addEventListener("close", () => $("#abrir-acc").focus());
+
+if (window.ResizeObserver) {
+  const observador = new ResizeObserver(actualizarMedidasFijas);
+  observador.observe($("header.site"));
+  observador.observe($("#barra-inferior"));
+}
+addEventListener("resize", actualizarMedidasFijas);
 
 cargarAjustes();
 aplicarAjustes();

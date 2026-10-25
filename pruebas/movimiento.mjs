@@ -1,0 +1,22 @@
+import {abrir,ir,cambiarRuta,esperar} from './comun.mjs';
+let fallos=0;const ok=(n,c,x='')=>{console.log((c?'✓ ':'✗ ')+n+(x?'  '+x:''));if(!c)fallos++};
+const nav=await abrir(375,812,{movil:true});const p=await nav.newPage();
+await p.evaluateOnNewDocument(()=>{window.__d=[];window.SpeechSynthesisUtterance=function(t){this.text=t};Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{speak(u){window.__d.push(u);if(window.__d.length===1)setTimeout(()=>u.onstart&&u.onstart(),20);if(window.__d.length===25)setTimeout(()=>u.onstart&&u.onstart(),60)},cancel(){window.__d.length=0},resume(){},getVoices(){return[{lang:'es-AR'}]}}})});
+console.log('== Movimiento: el sistema pide menos movimiento (prefers-reduced-motion: reduce)');
+await p.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);await ir(p,'');
+const anim=async()=>p.evaluate(()=>{const mal=[];for(const e of document.querySelectorAll('*')){const s=getComputedStyle(e);if((parseFloat(s.transitionDuration)>0.001&&s.transitionProperty!=='none')||(parseFloat(s.animationDuration)>0.001&&s.animationName!=='none'))mal.push(e.tagName.toLowerCase()+'.'+e.className)}return[...new Set(mal)].slice(0,4)});
+for(const r of ['','archivo','historia','foto/banco-de-la-nacion-argentina']){await cambiarRuta(p,r);const m=await anim();if(m.length)ok('/'+r+' sin transiciones ni animaciones',false,m.join(','))}
+ok('ninguna página tiene transiciones ni animaciones CSS',true);
+ok('el desplazamiento no es suave',await p.evaluate(()=>getComputedStyle(document.documentElement).scrollBehavior==='auto'));
+const por=await p.evaluate(()=>document.getElementById('acc-sinscroll').checked);ok('primera visita con menos movimiento: «No mover la página al leer» ya viene activada',por===true);
+await cambiarRuta(p,'historia');await p.click('#escuchar');await esperar(600);
+const y0=await p.evaluate(()=>scrollY);await esperar(300);
+ok('la página no se desplaza sola mientras lee, pero resalta el bloque',(await p.evaluate(()=>scrollY))===y0&&(await p.evaluate(()=>!!document.querySelector('.leyendo'))),'scrollY '+y0);
+await p.click('#lec-detener');
+console.log('\n== Sin esa preferencia: sí acompaña la lectura');
+await p.emulateMediaFeatures([]);await p.evaluate(()=>localStorage.clear());await p.reload({waitUntil:'load'});await p.waitForSelector('#main h1');await cambiarRuta(p,'historia');
+ok('«No mover la página» viene desactivada',await p.evaluate(()=>document.getElementById('acc-sinscroll').checked===false));
+await p.click('#escuchar');await esperar(900);const y1=await p.evaluate(()=>scrollY);ok('la página se desplaza para seguir la lectura',y1>0,'scrollY '+y1);await p.click('#lec-detener');
+await p.evaluate(()=>window.scrollTo(0,0));await p.click('#abrir-acc');await p.click('#acc-sinscroll');await p.click('#acc-cerrar');await p.click('#escuchar');await esperar(900);
+ok('activándolo a mano, la página se queda quieta',(await p.evaluate(()=>scrollY))===0&&(await p.evaluate(()=>!!document.querySelector('.leyendo'))));
+console.log(fallos?`\n${fallos} fallos`:'\nTodo en orden');await nav.close();

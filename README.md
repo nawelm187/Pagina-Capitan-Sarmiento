@@ -10,6 +10,9 @@ Archivo web de fotografías y documentos históricos de Capitán Sarmiento. Es u
 | `js/app.js` | Lógica del sitio (páginas, búsqueda, visor). |
 | `css/estilos.css` | Estilos. |
 | `index.html` | Estructura base. |
+| `fonts/` | Letras propias (licencia SIL OFL, con sus textos). |
+| `docs/` | Informe de accesibilidad. |
+| `pruebas/` | Pruebas opcionales en navegador real. |
 | `img/` | Copias de consulta (hasta 1600 px, sin metadatos). |
 | `originales/` | Imágenes tal como llegaron. No se editan. |
 
@@ -22,11 +25,11 @@ Archivo web de fotografías y documentos históricos de Capitán Sarmiento. Es u
 Si un texto necesita comillas dobles, usá «así» o escribilas `\"así\"`.
 
 Los campos de cada foto:
-`id` (la dirección de la ficha), `archivo`, `ancho` y `alto` (en píxeles), `titulo`, `descripcion` (corta), `epoca` (época aproximada, o `null`), `textoAlternativo` (lo leen los lectores de pantalla), `coleccion`, `destacada` (`true` = aparece en el inicio) y `actual` (`null` si no tiene foto actual).
+`id` (la dirección de la ficha), `archivo`, `ancho` y `alto` (en píxeles), `titulo`, `descripcion` (corta), `miniatura` (versión liviana para las listas, o `null`), `epoca` (época aproximada, o `null`), `textoAlternativo` (lo leen los lectores de pantalla), `coleccion`, `destacada` (`true` = aparece en el inicio) y `actual` (`null` si no tiene foto actual).
 
 ## Agregar una foto nueva
 
-1. Copiá la imagen a `img/`.
+1. Copiá la imagen a `img/`. Si mide más de 640 px de ancho, guardá además una copia de 640 px en `img/min/` y anotala en `miniatura`: así las listas cargan rápido en celulares.
 2. En `js/datos.js`, duplicá un bloque `{ ... }` de `FOTOS`, pegalo al final de la lista y cambiá sus datos. `ancho` y `alto` salen de las propiedades de la imagen.
 
 Para documentos, el procedimiento es el mismo en `DOCUMENTOS`.
@@ -36,6 +39,8 @@ Para documentos, el procedimiento es el mismo en `DOCUMENTOS`.
 La página Historia sale de `js/datos.js`: `RESUMEN` es la lista de frases de «En pocas palabras»; `HISTORIA` tiene los apartados, cada uno con un `titulo`, los `parrafos` completos y su versión de lectura fácil en `facil`; `GLOSARIO` tiene las palabras difíciles. Para agregar uno, duplicá un bloque.
 
 ## Línea de tiempo
+
+Es una línea horizontal de años: al elegir un año aparece, debajo, todo lo que pasó ese año. La dirección guarda el año (`#/linea-de-tiempo/1884`). Debajo hay un desplegable con todos los hechos en una lista.
 
 Se arma sola con los bloques de `HITOS` (hechos sin imagen) y con los documentos que tienen `fecha` y `anio`. Para sumar un hecho, duplicá un bloque de `HITOS` y completá `anio` (para ordenar), `fecha` (como se muestra), `titulo` y `descripcion`. Cada hecho trae su fuente en un comentario, que no se muestra en el sitio.
 
@@ -60,7 +65,7 @@ Las fotos con `actual` muestran «Con foto actual» en el archivo y una barra al
 **Para entender el contenido**
 - **Lectura fácil** en Historia: cada apartado tiene una versión de frases cortas, con una idea por frase (campo `facil` de `HISTORIA`). Se activa con un botón en la página o desde «Accesibilidad».
 - **Palabras difíciles** (glosario) con 37 términos, y **En pocas palabras** al inicio de Historia.
-- **Ir a un apartado** (Historia) e **Ir a una fecha** (Línea de tiempo) para no recorrer páginas largas.
+- **Ir a un apartado** (Historia) y una **línea de tiempo horizontal**: se elige un año, se arrastra la línea o se usan las flechas, y debajo aparece todo lo de ese año.
 - Íconos junto a cada opción del menú y una guía, **Cómo usar el sitio**, en lenguaje simple.
 
 **Para ver y leer mejor**
@@ -79,7 +84,9 @@ Las fotos con `actual` muestran «Con foto actual» en el archivo y una barra al
 
 **Todo se guarda en el dispositivo.** Hay dos «Ajustes rápidos» (Lectura cómoda y Máxima visibilidad) y «Restablecer todo».
 
-**Cómo se verificó:** auditoría automática con axe-core en todas las páginas y estados (0 violaciones; no mide el contraste de colores, que se calculó aparte: todas las combinaciones cumplen AA) y pruebas automáticas de cada función. No hubo auditoría externa ni prueba con lectores de pantalla o personas con discapacidad: eso sigue pendiente.
+**Informe completo:** `docs/ACCESIBILIDAD.md` (hallazgos, correcciones, cobertura y pendientes). Las pruebas en navegador real están en `pruebas/` (ver su `LEEME.md`).
+
+**Cómo se verificó:** auditoría en un Chromium real con axe-core (97 auditorías, 0 violaciones, con contraste calculado), reflujo a 320 px en 65 comprobaciones, 13 combinaciones de contraste, espaciado de texto, objetivos táctiles y recorrido con teclado. No hubo auditoría externa ni prueba con lectores de pantalla o personas con discapacidad: eso sigue pendiente.
 
 **Límites conocidos:** no hay videos ni audios, por lo que no hay subtítulos ni lengua de señas; los documentos manuscritos son imágenes y todavía no tienen transcripción (solo una descripción); la voz y el dictado dependen del navegador.
 

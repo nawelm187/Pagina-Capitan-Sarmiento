@@ -8,9 +8,6 @@
   <meta property="og:title" content="Memoria de Capitán Sarmiento">
   <meta property="og:description" content="Fotografías y documentos para conservar y consultar la historia de Capitán Sarmiento.">
   <meta property="og:type" content="website">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -73,7 +70,7 @@
   <nav class="barra-inferior" id="barra-inferior" aria-label="Accesos rápidos" hidden>
     <button type="button" class="btn sm ghost" id="inf-volver"><span aria-hidden="true">←</span> Volver</button>
     <a class="btn sm ghost" href="#/">Inicio</a>
-    <button type="button" class="btn sm ghost" id="inf-escuchar" data-escuchar data-corto aria-pressed="false">Escuchar</button>
+    <button type="button" class="btn sm ghost" id="inf-escuchar" data-escuchar data-corto>Escuchar</button>
     <button type="button" class="btn sm ghost" id="inf-acc" aria-haspopup="dialog">Accesibilidad</button>
   </nav>
 
@@ -81,8 +78,6 @@
   <dialog id="lb" aria-labelledby="lbt">
     <div class="dh">
       <h2 id="lbt"></h2>
-    </div>
-    <div class="dh dh-botones">
       <button type="button" class="btn sm ghost" data-zoom="-1"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12" stroke="currentColor" stroke-width="2"/></svg>Alejar</button>
       <button type="button" class="btn sm ghost" data-zoom="1"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h12M9 3v12" stroke="currentColor" stroke-width="2"/></svg>Acercar</button>
       <button type="button" class="btn sm" id="lbc"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15" stroke="currentColor" stroke-width="2"/></svg>Cerrar</button>
@@ -139,6 +134,7 @@
         <label><input type="radio" name="fondo" value="verde"> Verde suave</label>
         <label><input type="radio" name="fondo" value="azul"> Azul claro</label>
         <label><input type="radio" name="fondo" value="gris"> Gris suave</label>
+        <p class="nota">Un color de fondo reemplaza al fondo claro u oscuro. El alto contraste tiene prioridad sobre todos.</p>
       </fieldset>
       <fieldset class="opciones">
         <legend>Lectura</legend>
@@ -159,7 +155,8 @@
         <label><input type="checkbox" id="acc-barrainferior"> Botones fijos abajo, para usar con una mano</label>
       </fieldset>
       <fieldset class="opciones">
-        <legend>Velocidad de la lectura en voz alta</legend>
+        <legend>Lectura en voz alta</legend>
+        <label><input type="checkbox" id="acc-sinscroll"> No mover la página mientras se lee, solo resaltar</label>
         <label><input type="radio" name="velocidad" value="lenta"> Lenta</label>
         <label><input type="radio" name="velocidad" value="normal"> Normal</label>
         <label><input type="radio" name="velocidad" value="rapida"> Rápida</label>

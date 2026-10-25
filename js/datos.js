@@ -10,6 +10,7 @@ const FOTOS = [
   {
     id: "calle-arbolada-con-comercios",  // texto de la dirección: #/foto/<id>
     archivo: "img/238429.jpg",
+    miniatura: "img/min/238429.jpg",  // versión liviana para las listas; null = se usa la imagen original
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 1026,
     titulo: "Calle arbolada con comercios",
@@ -23,6 +24,7 @@ const FOTOS = [
   {
     id: "estacion-ferroviaria",  // texto de la dirección: #/foto/<id>
     archivo: "img/238430.jpg",
+    miniatura: "img/min/238430.jpg",  // versión liviana para las listas; null = se usa la imagen original
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 937,
     titulo: "Estación de ferrocarril con una locomotora a vapor",
@@ -36,6 +38,7 @@ const FOTOS = [
   {
     id: "calle-de-tierra-el-fuego",  // texto de la dirección: #/foto/<id>
     archivo: "img/238432.jpg",
+    miniatura: "img/min/238432.jpg",  // versión liviana para las listas; null = se usa la imagen original
     ancho: 1280,  // medidas de la imagen en píxeles
     alto: 737,
     titulo: "Calle de tierra frente a la mueblería «El Fuego»",
@@ -53,6 +56,7 @@ const FOTOS = [
   {
     id: "acto-publico-en-esquina",  // texto de la dirección: #/foto/<id>
     archivo: "img/238428.jpg",
+    miniatura: "img/min/238428.jpg",  // versión liviana para las listas; null = se usa la imagen original
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 1125,
     titulo: "Acto público frente a una esquina",
@@ -70,6 +74,7 @@ const FOTOS = [
   {
     id: "banco-de-la-nacion-argentina",  // texto de la dirección: #/foto/<id>
     archivo: "img/238419.jpg",
+    miniatura: "img/min/238419.jpg",  // versión liviana para las listas; null = se usa la imagen original
     ancho: 1204,  // medidas de la imagen en píxeles
     alto: 1600,
     titulo: "Banco de la Nación Argentina",
@@ -87,6 +92,7 @@ const FOTOS = [
   {
     id: "iglesia-frente-a-un-descampado",  // texto de la dirección: #/foto/<id>
     archivo: "img/238431.jpg",
+    miniatura: "img/min/238431.jpg",  // versión liviana para las listas; null = se usa la imagen original
     ancho: 720,  // medidas de la imagen en píxeles
     alto: 429,
     titulo: "Iglesia con campanario frente a un terreno abierto",
@@ -104,6 +110,7 @@ const FOTOS = [
   {
     id: "iglesia-de-torre-con-ciclista",  // texto de la dirección: #/foto/<id>
     archivo: "img/238427.jpg",
+    miniatura: null,  // versión liviana para las listas; null = se usa la imagen original
     ancho: 267,  // medidas de la imagen en píxeles
     alto: 188,
     titulo: "Calle ancha con una iglesia de torre alta y un ciclista",
@@ -121,6 +128,7 @@ const FOTOS = [
   {
     id: "sala-de-lectura",  // texto de la dirección: #/foto/<id>
     archivo: "img/238424.jpg",
+    miniatura: null,  // versión liviana para las listas; null = se usa la imagen original
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 179,
     titulo: "Personas leyendo en una sala con bibliotecas",
@@ -134,6 +142,7 @@ const FOTOS = [
   {
     id: "rancho-con-caballos-y-aves",  // texto de la dirección: #/foto/<id>
     archivo: "img/238422.jpg",
+    miniatura: null,  // versión liviana para las listas; null = se usa la imagen original
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 157,
     titulo: "Rancho de techo de paja con caballos y aves",
@@ -151,6 +160,7 @@ const DOCUMENTOS = [
   {
     id: "nota-de-cierre-libro-bautismos",  // texto de la dirección: #/documento/<id>
     archivo: "img/238383.jpg",
+    miniatura: null,  // versión liviana para las listas; null = se usa la imagen original
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 168,
     titulo: "Nota manuscrita al final de un libro de bautismos",
@@ -163,6 +173,7 @@ const DOCUMENTOS = [
   {
     id: "bautismo-flora-olinda",  // texto de la dirección: #/documento/<id>
     archivo: "img/238384.jpg",
+    miniatura: null,  // versión liviana para las listas; null = se usa la imagen original
     ancho: 275,  // medidas de la imagen en píxeles
     alto: 400,
     titulo: "Partida de bautismo de Flora Olinda",
@@ -175,6 +186,7 @@ const DOCUMENTOS = [
   {
     id: "certificado-de-matrimonio",  // texto de la dirección: #/documento/<id>
     archivo: "img/238385.jpg",
+    miniatura: null,  // versión liviana para las listas; null = se usa la imagen original
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 264,
     titulo: "Certificado de matrimonio",
@@ -187,6 +199,7 @@ const DOCUMENTOS = [
   {
     id: "bautismo-capellania-vicaria",  // texto de la dirección: #/documento/<id>
     archivo: "img/238386.jpg",
+    miniatura: null,  // versión liviana para las listas; null = se usa la imagen original
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 246,
     titulo: "Partida de bautismo de la Capellanía Vicaría de Capitán Sarmiento",

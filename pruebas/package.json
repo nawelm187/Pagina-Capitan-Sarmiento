@@ -1,0 +1,11 @@
+{
+  "name": "pruebas-accesibilidad-memoria-capitan-sarmiento",
+  "private": true,
+  "type": "module",
+  "description": "Pruebas en navegador real (Chromium) para el sitio. Ver LEEME.md.",
+  "dependencies": {
+    "@sparticuz/chromium": "^153.0.0",
+    "axe-core": "^4.14.0",
+    "puppeteer-core": "^25.14.0"
+  }
+}

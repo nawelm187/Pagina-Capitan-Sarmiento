@@ -1,5 +1,56 @@
 /* Estilos de Memoria de Capitán Sarmiento */
 
+/* FUENTES-INICIO: tipografías propias (licencia SIL OFL 1.1, ver fonts/). Cubren todo el español. */
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/source-sans-3-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/source-sans-3-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/source-serif-4-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/source-serif-4-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2");
+}
+
+/* FUENTES-FIN */
+
 :root {
   --bg: #f5efe3;
   --surf: #ece4d4;
@@ -79,7 +130,12 @@ h1,h2,h3 {
 h1 {
   font-size: clamp(2.1rem,6vw,3.6rem);
   letter-spacing: -.01em;
+  overflow-wrap: anywhere;
 }
+
+/* Con el texto muy agrandado, el título principal baja un escalón para no salirse de la pantalla */
+:root[data-texto="4"] h1,
+:root[data-texto="5"] h1 { font-size: 1.75rem; }
 
 h2 {
   font-size: clamp(1.5rem,3.6vw,2.1rem);
@@ -162,6 +218,9 @@ main {
   cursor: pointer;
   font-family: var(--sans);
   font-size: 1rem;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: center;
 }
 
 .btn.ghost {
@@ -171,9 +230,16 @@ main {
 }
 
 .btn.sm {
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 .9rem;
   font-size: .95rem;
+}
+
+/* Con texto muy agrandado, los botones chicos ajustan su relleno para entrar en 320 px */
+:root[data-texto="4"] .btn.sm,
+:root[data-texto="5"] .btn.sm {
+  padding: 0 .6rem;
+  font-size: .85rem;
 }
 
 .hero {
@@ -292,26 +358,19 @@ figcaption {
   text-underline-offset: 3px;
 }
 
+/* Archivo: cuadrícula pareja, todas las fotos con el mismo marco para que los títulos queden alineados.
+   Solo se recorta la miniatura; la ficha y el visor muestran la foto completa. */
 .grid {
-  columns: 1;
-  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 1.8rem 1.4rem;
 }
 
-@media (min-width: 600px) {
-  .grid {
-    columns: 2;
-  }
-}
-
-@media (min-width: 960px) {
-  .grid {
-    columns: 3;
-  }
-}
-
-.grid .ph {
-  break-inside: avoid;
-  margin-bottom: 1.6rem;
+.grid .ph img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
 }
 
 .tools {
@@ -327,12 +386,18 @@ figcaption {
 
 .tools label {
   display: grid;
+  flex: 1 1 14rem;
+  min-width: 0;
   gap: .25rem;
   font-size: .85rem;
   color: var(--mut);
 }
 
 .tools input,.tools select {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  text-overflow: ellipsis;
   font: inherit;
   color: var(--ink);
   background: var(--bg);
@@ -341,9 +406,6 @@ figcaption {
   padding: 0 .7rem;
 }
 
-.tools input {
-  min-width: min(100%,280px);
-}
 
 .rows {
   list-style: none;
@@ -622,7 +684,8 @@ footer.site ul {
 
 /* ---------- Base y tamaño del texto (el usuario lo elige en «Accesibilidad») ---------- */
 html {
-  scroll-padding-top: 1rem;
+  scroll-padding-top: calc(var(--alto-cabecera, 0px) + 1rem);
+  scroll-padding-bottom: calc(var(--alto-barra, 0px) + var(--alto-controles, 0px) + 1rem);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -642,9 +705,21 @@ header.site {
 }
 
 .acciones {
+  flex: 1 1 100%;
   display: flex;
+  flex-wrap: wrap;
   gap: .5rem;
-  margin-left: auto;
+  min-width: 0;
+}
+
+.acciones .btn {
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .acciones { flex: 0 1 auto; margin-left: auto; }
+  .acciones .btn { flex: 0 0 auto; }
 }
 
 #nav {
@@ -681,18 +756,20 @@ header.site {
 
 /* Pantallas anchas: menú en una fila y cabecera fija */
 @media (min-width: 1080px) {
-  header.site {
+  .btn.menu { display: none; }
+  .bar { flex-wrap: wrap; }
+  #nav { display: block; flex-basis: 100%; padding: 0; }
+  #nav ul { display: flex; gap: 1.1rem; }
+  #nav a { min-height: 0; padding: .5rem 0; border-bottom: 2px solid transparent; font-size: .95rem; }
+}
+
+/* La cabecera solo queda fija si hay lugar: con texto muy grande o pantallas bajas ocuparía media pantalla */
+@media (min-width: 1080px) and (min-height: 640px) {
+  :root:not([data-texto="3"]):not([data-texto="4"]):not([data-texto="5"]) header.site {
     position: sticky;
     top: env(safe-area-inset-top,0px);
     z-index: 10;
   }
-  html { scroll-padding-top: 5rem; }
-  .btn.menu { display: none; }
-  .acciones { margin-left: 0; }
-  .bar { flex-wrap: nowrap; justify-content: space-between; }
-  #nav { display: block; flex-basis: auto; border: 0; padding: 0; }
-  #nav ul { display: flex; gap: 1.1rem; }
-  #nav a { min-height: 0; padding: .5rem 0; border-bottom: 2px solid transparent; font-size: .95rem; }
 }
 
 /* ---------- Barra de página: Volver y Escuchar ---------- */
@@ -737,7 +814,6 @@ dialog[open] {
   font-size: 1.15rem;
 }
 
-.dh-botones { justify-content: flex-start; }
 
 .panel .cuerpo {
   display: grid;
@@ -905,9 +981,12 @@ dialog[open] {
 .resumen ul { margin: 0; padding-left: 1.2rem; max-width: 66ch; }
 .resumen li { margin-bottom: .5rem; }
 
-.indice label { display: grid; gap: .3rem; font-weight: 600; }
+.indice label { display: grid; gap: .3rem; min-width: 0; font-weight: 600; }
 
 .indice select {
+  width: 100%;
+  min-width: 0;
+  text-overflow: ellipsis;
   min-height: 48px;
   max-width: 100%;
   padding: 0 .7rem;
@@ -1017,7 +1096,10 @@ dialog[open] {
   bottom: 0;
   z-index: 30;
   display: flex;
+  flex-wrap: wrap;
   gap: .5rem;
+  max-height: 45vh;
+  overflow-y: auto;
   padding: .5rem .6rem;
   padding-bottom: calc(.5rem + env(safe-area-inset-bottom,0px));
   background: var(--bg);
@@ -1025,14 +1107,15 @@ dialog[open] {
 }
 
 .barra-inferior .btn {
-  flex: 1 1 0;
+  flex: 1 1 7rem;
   justify-content: center;
   min-height: 52px;
   padding: 0 .4rem;
   font-size: .95rem;
 }
 
-:root[data-barrainferior="si"] body { padding-bottom: 6rem; }
+/* Lo que queda fijo abajo (barra inferior y controles de la lectura) no tapa el final de la página */
+body { padding-bottom: calc(var(--alto-barra, 0px) + var(--alto-controles, 0px)); }
 
 /* ---------- Historia: lectura fácil y glosario ---------- */
 .herramientas-texto {
@@ -1051,4 +1134,232 @@ h1:focus { outline: none; }
 
 @media print {
   .barra-inferior { display: none !important; }
+}
+
+/* ---------- Reflujo: las columnas de cuadrícula pueden encogerse hasta 320 px ---------- */
+.hero > *,
+.ficha > *,
+.pick > *,
+.tools > * { min-width: 0; }
+
+/* ---------- Objetivos táctiles de al menos 44 px (pie, migas y línea de tiempo) ---------- */
+footer.site li a {
+  display: block;
+  min-height: 44px;
+  padding: .6rem 0;
+}
+
+footer.site ul { gap: 0; }
+
+.crumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 .4rem;
+}
+
+.crumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 .2rem;
+}
+
+.tl .hecho a { display: inline-block; padding: .4rem 0; }
+
+/* ---------- Visor y panel: caben en pantallas bajas ---------- */
+dialog[open] { overflow: auto; }
+.ds { min-height: 9rem; }
+
+.dbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem .8rem;
+}
+
+.dbar input { flex: 1 1 9rem; width: auto; min-width: 0; }
+.dbar .botones { grid-column: auto; flex: 1 1 auto; }
+.dbar small { flex-basis: 100%; }
+
+@media (max-height: 520px) {
+  .dh { padding-top: calc(.3rem + env(safe-area-inset-top,0px)); padding-bottom: .3rem; }
+  .dbar { padding-top: .3rem; padding-bottom: calc(.3rem + env(safe-area-inset-bottom,0px)); }
+  /* La explicación sigue disponible para lectores de pantalla pero no ocupa lugar */
+  .dbar small {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/* Dentro del contenido, las palabras largas pueden partirse para que nada se salga de 320 px */
+main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
+
+/* El menú y las acciones de la cabecera nunca parten una palabra a la mitad en pantallas anchas */
+@media (min-width: 1080px) {
+  #nav a { white-space: nowrap; overflow-wrap: normal; }
+  #nav li { flex: 0 0 auto; }
+  .acciones { flex-wrap: nowrap; }
+  .acciones .btn { white-space: nowrap; overflow-wrap: normal; }
+  .brand { flex: 1 1 auto; }
+}
+
+/* Con texto muy grande la cabecera deja de ser fija y puede ocupar varias filas */
+:root[data-texto="3"] .bar,
+:root[data-texto="4"] .bar,
+:root[data-texto="5"] .bar { flex-wrap: wrap; }
+
+/* ---------- Controles de la lectura en voz alta ----------
+   Quedan fijos abajo mientras se lee, porque la página se desplaza sola siguiendo la voz. */
+.controles-lectura {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: var(--alto-barra, 0px);
+  z-index: 35;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding: .5rem .6rem;
+  padding-bottom: calc(.5rem + env(safe-area-inset-bottom,0px));
+  background: var(--bg);
+  border-top: 2px solid var(--ink);
+}
+
+.controles-lectura .btn {
+  flex: 1 1 6rem;
+  justify-content: center;
+}
+
+/* ---------- Línea de tiempo horizontal ---------- */
+.cronologia-controles { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1rem 0; }
+
+.pista {
+  overflow-x: auto;
+  padding: .4rem 0 .8rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  scrollbar-width: thin;
+}
+
+.pista.arrastrando { cursor: grabbing; }
+
+/* El relleno lateral permite centrar el primer y el último año */
+.anios {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: max-content;
+  min-width: 100%;
+  padding: 0 40vw;
+}
+
+.anios::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(1.1rem - 2px);
+  height: 4px;
+  background: var(--ink);
+  opacity: .35;
+}
+
+.anio-tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .35rem;
+  min-width: 44px;
+  min-height: 44px;
+  margin-left: calc(var(--salto, 0) * 2px);
+  padding: .5rem .6rem .4rem;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.punto {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--ink);
+}
+
+.anio {
+  font: 600 .95rem var(--sans);
+  border-bottom: 3px solid transparent;
+}
+
+.anio-tab[aria-selected="true"] .punto {
+  background: var(--acc);
+  border-color: var(--acc);
+  transform: scale(1.35);
+}
+
+.anio-tab[aria-selected="true"] .anio {
+  color: var(--acc);
+  border-bottom-color: var(--acc);
+}
+
+/* Años con más de un hecho llevan un número */
+.anio-tab::after {
+  content: attr(data-cuenta);
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 1.1rem;
+  padding: 0 .3rem;
+  border-radius: 99px;
+  background: var(--acc);
+  color: var(--onacc);
+  font: 600 .7rem/1.1rem var(--sans);
+  text-align: center;
+}
+
+.anio-tab[data-cuenta=""]::after { display: none; }
+
+.panel-anio {
+  margin-top: 1.2rem;
+  padding: 1.2rem 1.4rem;
+  background: var(--surf);
+  border-left: 4px solid var(--acc);
+}
+
+.panel-anio h2 { margin-bottom: .2rem; }
+.cuenta-anio { margin: 0 0 1rem; color: var(--mut); }
+.hecho-anio + .hecho-anio { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.hecho-anio h3 { margin: 0 0 .3rem; }
+.hecho-anio p { margin-bottom: 0; }
+.hecho-anio .fecha { margin-bottom: .2rem; }
+
+.lista-completa { margin: 2rem 0; }
+
+.lista-completa summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lista-completa .tl { margin-top: 1.2rem; }
+
+:root[data-contraste="alto"] .anios::before { opacity: 1; }
+
+@media (forced-colors: active) {
+  .anios::before { background: CanvasText; opacity: 1; }
+  .punto { border-color: CanvasText; }
+  .anio-tab[aria-selected="true"] .punto { background: Highlight; border-color: Highlight; }
 }
