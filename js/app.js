@@ -643,7 +643,13 @@ let nivelZoom = 1;
 
 function ajustarZoom(nivel) {
   nivelZoom = Math.min(4, Math.max(1, nivel));
-  $("#lbw").style.width = `${nivelZoom * 100}%`;
+  const contenedor = $("#lbw");
+  contenedor.style.setProperty("--lb-zoom", String(nivelZoom));
+  const zona = $("#lb .ds");
+  zona.style.overflow = nivelZoom > 1 ? "auto" : "hidden";
+  zona.setAttribute("aria-label", nivelZoom > 1
+    ? "Imagen ampliada con zoom; desplazable"
+    : "Imagen completa ajustada a la pantalla");
 }
 
 // Posición del divisor: 0 = solo la foto antigua, 100 = solo la actual

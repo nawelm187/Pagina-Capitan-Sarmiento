@@ -485,12 +485,42 @@ figcaption {
 }
 
 #lbw {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(var(--lb-zoom, 1));
+  transform-origin: center center;
 }
 
 #lbw>img {
-  width: 100%;
+  display: block;
+  width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* El comparador ocupa el área disponible; ambas fotos se contienen en el mismo marco. */
+#lbw>.cmp {
+  flex: 0 1 auto;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+#lbw>.cmp img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .empty {
@@ -518,15 +548,22 @@ dialog[open] {
 }
 
 .ds {
-  flex: 1;
-  overflow: auto;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   background: var(--surf);
-  padding: 1rem;
+  padding: clamp(.25rem, 1.2vw, 1rem);
 }
 
 .ds img {
-  max-width: none;
+  max-width: 100%;
+  max-height: 100%;
   margin: 0 auto;
+  object-fit: contain;
 }
 
 footer.site {
@@ -734,6 +771,15 @@ dialog {
 dialog[open] {
   display: flex;
   flex-direction: column;
+}
+
+/* El visor nunca debe generar scroll de página: la foto se ajusta al espacio restante. */
+dialog#lb {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
 }
 
 .dh {
@@ -1133,9 +1179,12 @@ footer.site ul { gap: 0; }
 
 /* ---------- Visor y panel: caben en pantallas bajas ---------- */
 
-dialog[open] { overflow: auto; }
+dialog[open]:not(#lb) { overflow: auto; }
 
-.ds { min-height: 9rem; }
+#lb .ds { min-height: 0; }
+#lb .dh { flex: 0 0 auto; }
+#lb .dbar { flex: 0 0 auto; }
+
 
 .dbar {
   display: flex;
