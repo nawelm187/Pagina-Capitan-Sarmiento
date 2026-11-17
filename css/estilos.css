@@ -1430,17 +1430,19 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
 .tren-en-via {
   position: absolute;
   z-index: 3;
-  top: -1.25rem;
+  top: -3.1rem;
   left: 0;
-  width: 84px;
+  width: 184px;
   transform: translateX(-50%);
-  height: 49px;
+  height: 96px;
   pointer-events: none;
   transition: left .55s cubic-bezier(.2,.75,.25,1);
   filter: drop-shadow(0 3px 2px rgba(0,0,0,.35));
 }
 
-.tren-en-via svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.tren-en-via canvas { display: block; width: 100%; height: 100%; overflow: visible; }
+.tren-en-via.tren-3d-fallback::after { content: "🚂"; display: block; font-size: 2.6rem; line-height: 1; text-align: center; filter: sepia(.55) drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
+.tren-en-via.tren-3d-listo { height: 96px; }
 
 .anio-tab[aria-selected="true"] { outline-offset: 3px; }
 
@@ -1478,7 +1480,8 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   .hecho-anio { margin-top: .9rem; padding-top: .9rem; }
   .pista { padding-top: 2.5rem; }
   .anios { padding-right: 3rem; padding-left: 3rem; }
-  .tren-en-via { width: 70px; height: 43px; top: -1.25rem; }
+  .tren-en-via { width: 148px; height: 78px; top: -2.35rem; }
+  .tren-en-via.tren-3d-listo { height: 78px; }
   .anio-tab { min-width: 48px; padding-right: .45rem; padding-left: .45rem; }
   .cronologia-controles { justify-content: space-between; }
   .posicion-anio { font-size: .8rem; }
