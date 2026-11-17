@@ -23,7 +23,7 @@ const FOTOS = [
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 1026,
     titulo: "Centro de la ciudad (1925–1935)",
-    descripcion: "Vista del centro urbano desde un punto elevado. Se observa una calle arbolada, con comercios a ambos lados, un carro tirado por caballo y algunos vehículos de época. Los carteles de los locales forman parte de la escena, aunque no todos permiten una lectura completa.",  // descripción corta
+    descripcion: "La fotografía ofrece una vista elevada del centro de Capitán Sarmiento y permite apreciar la disposición de la calle y sus comercios. A ambos lados se alinean edificios bajos y arbolado joven; sobre la calzada circula un carro tirado por caballos y, más adelante, se distingue un automóvil. Los letreros de los negocios muestran la actividad comercial de la zona en aquellos años. La imagen no permite identificar con certeza todos los locales ni fijar una fecha más precisa que el período indicado.",  // descripción corta
     epoca: "1925–1935",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
     textoAlternativo: "Vista elevada del centro de la ciudad: calle arbolada, comercios a ambos lados, un carro tirado por caballo y vehículos de época.",  // descripción breve para lectores de pantalla
     coleccion: "Calles y plazas",  // agrupa las fotos en la página Colecciones
@@ -38,7 +38,7 @@ const FOTOS = [
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 937,
     titulo: "Estación de tren (1910–1940)",
-    descripcion: "Vista del predio de la estación ferroviaria, con construcciones entre árboles y una línea de postes blancos que delimita el terreno. En el extremo derecho se distingue parte de un vehículo ferroviario. En esta fotografía no se aprecia una locomotora a vapor, por lo que no corresponde describir una.",  // descripción corta
+    descripcion: "La imagen registra el entorno de la estación ferroviaria de Capitán Sarmiento: un amplio espacio abierto, una hilera de postes blancos en primer plano, árboles que acompañan el predio y construcciones vinculadas al conjunto ferroviario. En el margen derecho aparece parcialmente una estructura o vehículo que no puede identificarse con seguridad. La fotografía permite documentar el paisaje de la estación, pero no muestra de manera reconocible una locomotora a vapor ni aporta por sí sola una fecha exacta.",  // descripción corta
     epoca: "1910–1940",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
     textoAlternativo: "Vista del predio de la estación de tren, con edificios entre árboles, postes blancos en primer plano y parte de un vehículo ferroviario hacia la derecha.",  // descripción breve para lectores de pantalla
     coleccion: "Ferrocarril",  // agrupa las fotos en la página Colecciones
@@ -53,7 +53,7 @@ const FOTOS = [
     ancho: 1280,  // medidas de la imagen en píxeles
     alto: 737,
     titulo: "Centro de la ciudad (1910–1930)",
-    descripcion: "Escena del centro urbano en una calle de tierra. A un lado se ven construcciones comerciales y una arboleda; varias personas están reunidas junto a los árboles, en un espacio todavía sin pavimentar. La identificación de la imagen la sitúa frente al antiguo comercio «El Fuego».",  // descripción corta
+    descripcion: "Vista de una calle céntrica todavía de tierra, con una hilera de árboles que acompaña el recorrido y construcciones comerciales sobre uno de sus laterales. En la fachada de la izquierda se alcanza a leer el nombre «El Fuego», referencia que permite relacionar la escena con el antiguo comercio mencionado en la identificación de la fotografía. En el centro varias personas se encuentran reunidas junto a la calle. La imagen conserva detalles del paisaje urbano y de la actividad cotidiana del pueblo entre 1910 y 1930.",  // descripción corta
     epoca: "1910–1930",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
     textoAlternativo: "Calle de tierra del centro de la ciudad, con comercios, árboles y un grupo de personas reunidas junto a ellos.",  // descripción breve para lectores de pantalla
     coleccion: "Calles y plazas",  // agrupa las fotos en la página Colecciones
@@ -72,7 +72,7 @@ const FOTOS = [
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 1125,
     titulo: "Acto público en lo que hoy es conocido como Zapatería Bilbao",
-    descripcion: "Un grupo numeroso de personas se reúne frente a un edificio de esquina durante un acto público. Se observan banderas y adornos entre la multitud, y varias personas sobre la azotea. La ubicación está identificada como el lugar que hoy se conoce por la Zapatería Bilbao; la fotografía, por sí sola, no permite precisar qué acto se realizó.",  // descripción corta
+    descripcion: "La fotografía muestra una concentración de público frente a un edificio de esquina. La multitud ocupa la calle y parte de la vereda; en la azotea también se observan varias personas, junto a elementos de ornamentación y banderas colocados para la ocasión. La ubicación ha sido identificada en el archivo como el sitio donde hoy se encuentra la Zapatería Bilbao. Aunque la escena evidencia un acto público, la imagen no permite determinar por sí sola cuál fue el motivo de la convocatoria ni quiénes participaron.",  // descripción corta
     epoca: "Década de 1960",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
     textoAlternativo: "Multitud reunida frente a un edificio de esquina durante un acto público, con banderas y varias personas sobre la azotea. Lugar identificado como la actual Zapatería Bilbao.",  // descripción breve para lectores de pantalla
     coleccion: "Edificios y esquinas",  // agrupa las fotos en la página Colecciones
@@ -91,7 +91,7 @@ const FOTOS = [
     ancho: 1204,  // medidas de la imagen en píxeles
     alto: 1600,
     titulo: "Banco de la Nación Argentina",
-    descripcion: "Edificio de esquina de dos plantas con ingreso por la ochava y la inscripción «Banco de la Nación Argentina» sobre la puerta.",  // descripción corta
+    descripcion: "La imagen retrata la antigua sede local del Banco de la Nación Argentina. Se distingue un edificio de esquina de dos plantas, con acceso principal resuelto en la ochava, puerta central, ventanas altas y una fachada revestida con molduras y detalles ornamentales. La investigación sobre el patrimonio arquitectónico del noroeste bonaerense registra una sucursal del Banco Nación en Capitán Sarmiento en 1926 y señala que este tipo de sucursales solía ocupar terrenos de esquina con entrada por la ochava. La fecha de la fotografía se mantiene como aproximada; no debe confundirse con la fecha de apertura de la sucursal.",  // descripción corta
     epoca: "Entre 1920 y 1950",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
     textoAlternativo: "Edificio de esquina de dos plantas con ingreso en la ochava y la inscripción «Banco de la Nación Argentina» en el frontón de la puerta.",  // descripción breve para lectores de pantalla
     coleccion: "Edificios y esquinas",  // agrupa las fotos en la página Colecciones
@@ -110,7 +110,7 @@ const FOTOS = [
     ancho: 720,  // medidas de la imagen en píxeles
     alto: 429,
     titulo: "Plaza San Martín (1930)",
-    descripcion: "Vista de la Plaza San Martín en torno a 1930, con un amplio espacio abierto y la iglesia al fondo. En primer plano aparecen un automóvil, un carro tirado por caballo y varias personas; también se distinguen senderos y sectores de terreno sin pavimentar.",  // descripción corta
+    descripcion: "La fotografía muestra el espacio que se identifica como Plaza San Martín hacia 1930, cuando buena parte del terreno todavía se veía abierto y sin el tratamiento paisajístico actual. Al fondo se levanta la iglesia San Carlos, que domina el perfil de la escena. En primer plano se observan un automóvil de época, un carro tirado por caballos y varias personas distribuidas por el predio. La imagen permite comparar la escala y el aspecto que tenía entonces este sector central de la localidad.",  // descripción corta
     epoca: "1930",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
     textoAlternativo: "Vista de la Plaza San Martín hacia 1930, con la iglesia al fondo, un automóvil, un carro tirado por caballo y personas en el espacio abierto.",  // descripción breve para lectores de pantalla
     coleccion: "Edificios y esquinas",  // agrupa las fotos en la página Colecciones
@@ -129,7 +129,7 @@ const FOTOS = [
     ancho: 267,  // medidas de la imagen en píxeles
     alto: 188,
     titulo: "Centro de la ciudad con la iglesia San Carlos (1998)",
-    descripcion: "Vista del centro de Capitán Sarmiento en 1998. La iglesia San Carlos se destaca por su torre, junto a la calle y los comercios del entorno. En primer plano se observa a una persona circulando en bicicleta. La fecha reemplaza el intervalo anterior de 1950 a 1970.",  // descripción corta
+    descripcion: "Vista del centro de Capitán Sarmiento fechada en 1998. La torre de la iglesia San Carlos se destaca sobre el perfil de edificios bajos y locales comerciales que acompañan la avenida. En primer plano, una persona circula en bicicleta; también se observan el arbolado del boulevard, luminarias y el movimiento habitual de la calle. La fotografía ofrece un registro del paisaje urbano de fines del siglo XX y permite reconocer la relación entre la iglesia y el centro comercial de la ciudad.",  // descripción corta
     epoca: "1998",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
     textoAlternativo: "Centro de Capitán Sarmiento en 1998, con la torre de la iglesia San Carlos, comercios y una persona circulando en bicicleta.",  // descripción breve para lectores de pantalla
     coleccion: "Edificios y esquinas",  // agrupa las fotos en la página Colecciones
@@ -148,7 +148,7 @@ const FOTOS = [
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 179,
     titulo: "Primera junta en Capitán Sarmiento para separarse de Arrecifes y ser un partido independiente",
-    descripcion: "Varias personas aparecen reunidas alrededor de una mesa larga, en una sala con bibliotecas y libros. Según la identificación aportada para esta fotografía, representa la primera junta de Capitán Sarmiento vinculada con la iniciativa de separarse de Arrecifes y constituirse en partido independiente. La imagen no permite identificar por sí sola a las personas ni establecer una fecha exacta.",  // descripción corta
+    descripcion: "La fotografía muestra a un grupo de personas reunidas alrededor de una mesa en una sala con bibliotecas y libros. De acuerdo con la identificación histórica aportada para esta colección, la escena corresponde a una primera junta de vecinos vinculada con las gestiones para lograr la autonomía de Capitán Sarmiento respecto de Arrecifes. Ese proceso tuvo varios antecedentes y culminó con la creación del partido por la Ley provincial 6485, el 29 de junio de 1961. No se han podido confirmar la fecha exacta de esta reunión ni los nombres de quienes aparecen en la imagen.",  // descripción corta
     epoca: "Fecha no confirmada",  // época sin documentación suficiente
     textoAlternativo: "Personas reunidas alrededor de una mesa larga en una sala con bibliotecas. La fotografía está identificada como la primera junta de Capitán Sarmiento para impulsar su separación de Arrecifes y su constitución como partido independiente.",  // descripción breve para lectores de pantalla
     coleccion: "Otras imágenes",  // agrupa las fotos en la página Colecciones
@@ -163,7 +163,7 @@ const FOTOS = [
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 157,
     titulo: "Supuesta primera casa/rancho de Capitán Sarmiento (1890–1930)",
-    descripcion: "Fotografía de un rancho de techo de paja en un entorno rural. Delante de la construcción se ven caballos, un carro y aves; también aparece una persona junto a los animales. La identificación como primera casa o rancho de Capitán Sarmiento es tentativa y no debe considerarse confirmada sin una fuente documental que la respalde.",  // descripción corta
+    descripcion: "La imagen presenta una vivienda rural de aspecto sencillo, con techo de paja y paredes de construcción rústica. Frente al rancho se encuentran caballos, un carro y otros animales; una persona aparece junto a ellos. La escena permite observar formas de vivienda y de trabajo propias del ámbito rural de la región en el período estimado. Su identificación como la primera casa o rancho de Capitán Sarmiento es tradicional o presunta: hasta contar con documentación que lo confirme, no corresponde presentarla como un hecho comprobado.",  // descripción corta
     epoca: "1890–1930",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
     textoAlternativo: "Rancho de techo de paja en un entorno rural, con caballos, un carro, una persona y aves en primer plano. Su identificación como primera casa o rancho de Capitán Sarmiento es presunta.",  // descripción breve para lectores de pantalla
     coleccion: "Otras imágenes",  // agrupa las fotos en la página Colecciones
