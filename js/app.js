@@ -359,8 +359,26 @@ function paginaLineaDeTiempo(id) {
       <div class="cronologia">
         <section class="panel-anio" id="panel-anio" role="tabpanel" aria-labelledby="anio-${elegido}">${htmlEventosDelAnio(elegido, porAnio.get(elegido))}</section>
         <div class="linea-fija" id="linea-fija">
-          <div class="pista" id="pista" role="region" aria-label="Línea de tiempo: años, de izquierda a derecha">
-            <div class="anios" role="tablist" aria-label="Años" aria-orientation="horizontal">${tabs.join("")}</div>
+          <div class="pista" id="pista" role="region" aria-label="Recorrido ferroviario: estaciones por año, de izquierda a derecha">
+            <div class="anios" role="tablist" aria-label="Estaciones por año" aria-orientation="horizontal">
+              <div class="tren-en-via" id="tren-en-via" aria-hidden="true">
+                <svg viewBox="0 0 100 58" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 42h76" fill="none" stroke="#30241b" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M17 45h67" fill="none" stroke="#c49a56" stroke-width="2"/>
+                  <circle cx="31" cy="43" r="8" fill="#29221c" stroke="#c49a56" stroke-width="3"/>
+                  <circle cx="70" cy="43" r="8" fill="#29221c" stroke="#c49a56" stroke-width="3"/>
+                  <path d="M12 34h75l-5-15H40l-5-8H22v23Z" fill="#702f32" stroke="#d1ad70" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M43 19h20v-9H47Z" fill="#b98a50" stroke="#e2c58e" stroke-width="2"/>
+                  <path d="M47 10V5h11v5M51 5V1h4v4" fill="none" stroke="#d8c39a" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M19 19h12v15H19z" fill="#d7b77d" stroke="#e2c58e" stroke-width="2"/>
+                  <path d="M22 22h6v7h-6z" fill="#292b2a"/>
+                  <path d="M80 22h8l5 7v5H80z" fill="#b98a50" stroke="#e2c58e" stroke-width="2"/>
+                  <path d="M37 12c-5-5 1-8 0-11 8 5 8 10 3 13M66 8c-4-5 2-7 1-10 7 5 6 9 2 12" fill="#c8b9a1" opacity=".7"/>
+                  <path d="M10 36h80" stroke="#e0c28a" stroke-width="2"/>
+                </svg>
+              </div>
+              ${tabs.join("")}
+            </div>
           </div>
           <div class="cronologia-controles">
             <button type="button" class="btn sm ghost" id="anio-anterior"><span aria-hidden="true">←</span> Año anterior</button>
@@ -384,7 +402,10 @@ function paginaLineaDeTiempo(id) {
 // Deja el año elegido en el centro de la línea
 function centrarEnPista(tab) {
   const pista = $("#pista");
-  if (pista && tab) pista.scrollLeft = tab.offsetLeft - (pista.clientWidth - tab.offsetWidth) / 2;
+  if (!pista || !tab) return;
+  pista.scrollLeft = tab.offsetLeft - (pista.clientWidth - tab.offsetWidth) / 2;
+  const tren = $("#tren-en-via");
+  if (tren) tren.style.left = `${tab.offsetLeft + tab.offsetWidth / 2}px`;
 }
 
 function elegirAnio(anio, { enfocar = false, avisar = false } = {}) {

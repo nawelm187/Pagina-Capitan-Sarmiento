@@ -1254,33 +1254,35 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   background: #000;
 }
 
-/* ---------- Línea de tiempo: el contenido arriba y la línea con los años abajo ---------- */
+/* ---------- Línea de tiempo: panel completo y recorrido ferroviario ---------- */
 .cronologia { margin-top: 1.5rem; }
 
 .panel-anio {
-  padding: 1.6rem clamp(1rem, 4vw, 2rem) 1.8rem;
+  min-width: 0;
+  padding: clamp(1.1rem, 2.6vw, 1.8rem) clamp(1rem, 3.5vw, 2rem);
   background: var(--surf);
   border-top: 4px solid var(--acc);
+  overflow-wrap: anywhere;
 }
 
 .anio-grande {
   margin: 0;
-  font: 600 clamp(2.8rem, 9vw, 4.4rem)/1 var(--serif);
+  font: 600 clamp(2.5rem, 7vw, 4rem)/1 var(--serif);
   color: var(--acc);
 }
 
-.cuenta-anio { margin: .4rem 0 0; color: var(--mut); }
+.cuenta-anio { margin: .35rem 0 0; color: var(--mut); }
 
 .hecho-anio {
   display: grid;
-  gap: 1.2rem 2rem;
-  margin-top: 1.4rem;
-  padding-top: 1.4rem;
+  gap: 1rem clamp(1.2rem, 3vw, 2rem);
+  margin-top: 1.1rem;
+  padding-top: 1.1rem;
   border-top: 1px solid var(--line);
 }
 
 .hecho-texto { min-width: 0; }
-.hecho-anio h3 { margin: 0 0 .4rem; font-size: 1.4rem; }
+.hecho-anio h3 { margin: 0 0 .4rem; font-size: clamp(1.15rem, 2vw, 1.4rem); }
 .hecho-anio p { margin-bottom: 0; }
 .hecho-anio .fecha { margin-bottom: .3rem; }
 
@@ -1291,60 +1293,74 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   min-width: 0;
 }
 
+.hecho-medios > * { min-width: 0; }
+
 @media (min-width: 760px) {
   .hecho-anio.con-medios { grid-template-columns: minmax(0, 1fr) minmax(0, 17rem); }
 }
 
-/* La línea queda pegada abajo de la pantalla mientras se lee el contenido de arriba */
+/* La cronología deja de flotar sobre el contenido: queda debajo del panel y nunca lo tapa. */
 .linea-fija {
-  position: sticky;
-  bottom: calc(var(--alto-barra, 0px) + var(--alto-controles, 0px));
-  z-index: 6;
-  padding: .4rem 0 .6rem;
+  position: relative;
+  bottom: auto;
+  z-index: 2;
+  margin-top: 1.25rem;
+  padding: .65rem 0 .55rem;
   background: var(--bg);
-  border-top: 2px solid var(--ink);
-  box-shadow: 0 -12px 20px -14px rgba(0, 0, 0, .45);
+  border-top: 2px solid var(--line);
+  box-shadow: 0 -8px 18px -18px rgba(0, 0, 0, .45);
 }
-
-@media (max-height: 520px) {
-  .linea-fija { position: static; }
-}
-
-:root[data-texto="4"] .linea-fija,
-:root[data-texto="5"] .linea-fija { position: static; }
 
 .pista {
   overflow-x: auto;
-  padding: 1.6rem 0 .4rem;
+  overflow-y: hidden;
+  padding: 2.65rem 0 .25rem;
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
   scrollbar-width: thin;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  scrollbar-color: #9b8056 transparent;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
 }
 
 .pista.arrastrando { cursor: grabbing; }
 
-/* El relleno lateral permite centrar el primer y el último año */
+/* El recorrido tiene dos rieles de bronce, durmientes y una base oscura. */
 .anios {
   position: relative;
   display: flex;
   align-items: flex-start;
   width: max-content;
   min-width: 100%;
-  padding: 0 40vw;
+  min-height: 5.3rem;
+  padding: 0 max(4rem, 8vw) .2rem;
+  isolation: isolate;
 }
 
 .anios::before {
   content: "";
   position: absolute;
+  z-index: -1;
   left: 0;
   right: 0;
-  top: calc(1.15rem - 2px);
-  height: 4px;
-  background: var(--ink);
-  opacity: .35;
+  top: 1.05rem;
+  height: 1.45rem;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 17px, #8c704b 17px 21px, transparent 21px 39px),
+    linear-gradient(to bottom, transparent 0 3px, #c4a36d 3px 6px, #574633 6px 10px, #c4a36d 10px 13px, transparent 13px);
+  opacity: .9;
+}
+
+.anios::after {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  left: 0;
+  right: 0;
+  top: 1.45rem;
+  height: .7rem;
+  background: linear-gradient(180deg, rgba(0,0,0,.28), transparent);
 }
 
 .anio-tab {
@@ -1352,11 +1368,11 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .4rem;
-  min-width: 44px;
-  min-height: 44px;
+  gap: .35rem;
+  min-width: 54px;
+  min-height: 3.7rem;
   margin-left: calc(var(--salto, 0) * 2px);
-  padding: .5rem .6rem .4rem;
+  padding: .85rem .6rem .35rem;
   background: none;
   border: 0;
   font: inherit;
@@ -1364,37 +1380,45 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   cursor: pointer;
 }
 
-/* Rótulo del siglo sobre el primer año de cada uno */
+/* Las señales de siglo funcionan como carteles de estación. */
 .anio-tab::before {
   content: attr(data-siglo);
   position: absolute;
-  top: -1.1rem;
-  left: .4rem;
+  top: -2.55rem;
+  left: 50%;
+  transform: translateX(-50%);
   white-space: nowrap;
-  font: 600 .7rem/1 var(--sans);
+  padding: .18rem .45rem;
+  border: 1px solid #806b4b;
+  border-radius: 2px;
+  background: var(--surf);
+  font: 600 .65rem/1.2 var(--sans);
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--mut);
 }
 
 .punto {
-  width: 1.3rem;
-  height: 1.3rem;
+  position: relative;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   background: var(--bg);
-  border: 3px solid var(--ink);
+  border: 3px solid #b99a69;
+  box-shadow: 0 0 0 2px rgba(35, 29, 22, .55);
 }
 
 .anio {
-  font: 600 .95rem var(--sans);
-  border-bottom: 3px solid transparent;
+  font: 600 .92rem var(--sans);
+  border-bottom: 2px solid transparent;
 }
 
 .anio-tab[aria-selected="true"] .punto {
-  background: var(--acc);
-  border-color: var(--acc);
-  box-shadow: 0 0 0 .35rem var(--resalte);
-  transform: scale(1.3);
+  background: #e0b878;
+  border-color: #f0d39a;
+  box-shadow: 0 0 0 .3rem rgba(180, 139, 75, .24), 0 0 0 2px #473a2a;
+  transform: scale(1.22);
 }
 
 .anio-tab[aria-selected="true"] .anio {
@@ -1402,22 +1426,40 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   border-bottom-color: var(--acc);
 }
 
-/* Años con más de un hecho llevan un número */
-.anio-tab::after {
+/* La locomotora se desplaza sobre la vía hasta la estación elegida. */
+.tren-en-via {
+  position: absolute;
+  z-index: 3;
+  top: -1.25rem;
+  left: 0;
+  width: 84px;
+  transform: translateX(-50%);
+  height: 49px;
+  pointer-events: none;
+  transition: left .55s cubic-bezier(.2,.75,.25,1);
+  filter: drop-shadow(0 3px 2px rgba(0,0,0,.35));
+}
+
+.tren-en-via svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.anio-tab[aria-selected="true"] { outline-offset: 3px; }
+
+/* El número indica cuántos hechos documentados tiene esa estación. */
+.anio-tab[data-cuenta]:not([data-cuenta=""])::after {
   content: attr(data-cuenta);
   position: absolute;
-  top: .1rem;
-  right: .1rem;
-  min-width: 1.1rem;
-  padding: 0 .3rem;
+  top: .25rem;
+  right: -.1rem;
+  min-width: 1rem;
+  padding: 0 .25rem;
+  border: 1px solid var(--bg);
   border-radius: 99px;
   background: var(--acc);
   color: var(--onacc);
-  font: 600 .7rem/1.1rem var(--sans);
+  font: 600 .65rem/1rem var(--sans);
   text-align: center;
 }
 
-.anio-tab[data-cuenta=""]::after,
 .anio-tab[data-siglo=""]::before { display: none; }
 
 .cronologia-controles {
@@ -1426,21 +1468,32 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   align-items: center;
   justify-content: space-between;
   gap: .6rem;
-  margin-top: .3rem;
+  margin-top: .25rem;
 }
 
 .posicion-anio { color: var(--mut); font-size: .95rem; }
-/* En pantallas angostas el contador se lee solo con lector de pantalla, para que los botones entren en una fila */
+
 @media (max-width: 520px) {
-  .posicion-anio {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
+  .panel-anio { padding: 1rem; }
+  .hecho-anio { margin-top: .9rem; padding-top: .9rem; }
+  .pista { padding-top: 2.5rem; }
+  .anios { padding-right: 3rem; padding-left: 3rem; }
+  .tren-en-via { width: 70px; height: 43px; top: -1.25rem; }
+  .anio-tab { min-width: 48px; padding-right: .45rem; padding-left: .45rem; }
+  .cronologia-controles { justify-content: space-between; }
+  .posicion-anio { font-size: .8rem; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .tren-en-via { transition: none; }
+}
+
+@media (max-height: 520px) {
+  .linea-fija { position: relative; }
+}
+
+:root[data-texto="4"] .linea-fija,
+:root[data-texto="5"] .linea-fija { position: relative; }
 
 :root[data-contraste="alto"] .anios::before { opacity: 1; }
 
@@ -1448,5 +1501,6 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   .anios::before { background: CanvasText; opacity: 1; }
   .punto { border-color: CanvasText; }
   .anio-tab[aria-selected="true"] .punto { background: Highlight; border-color: Highlight; }
+  .tren-en-via { filter: none; }
   .linea-fija { border-top-color: CanvasText; }
 }
