@@ -22,7 +22,9 @@ Cada prueba imprime ✓ o ✗ y termina con un resumen.
 | `fuentes-propias.mjs` | Que las letras se carguen desde el propio sitio, sin pedidos a otros servidores. |
 | `ventanas-enlaces-y-nombres.mjs` | Foco y teclado en el visor, el panel y el menú; que el nombre accesible incluya el texto visible (control por voz); enlaces internos sin romper, imágenes que cargan y consola limpia. |
 | `linea-de-tiempo.mjs` | La línea de tiempo horizontal: elegir un año con clic, toque, flechas, Inicio y Fin y botones; arrastrar con el mouse; enlace con el año; tamaño de los botones; axe y reflujo a 320 px. |
-| `archivo-cuadricula.mjs` | Que las fotos del archivo tengan el mismo alto y proporción en cuatro anchos de pantalla. |
+| `linea-de-tiempo-foco.mjs` | Que la línea de tiempo pegada abajo no tape los enlaces del panel al recorrerlos con el teclado (celular, con barra inferior, escritorio y celular horizontal). |
+| `archivo-cuadricula.mjs` | Que las fotos del archivo, el inicio, las colecciones y los documentos tengan tarjetas del mismo tamaño en varios anchos de pantalla. |
+| `lengua-de-senas.mjs` | El video en lengua de señas (con una copia de prueba, ver el comentario del archivo): no descarga nada hasta abrirlo, subtítulos, teclado, tamaño, axe y reflujo. |
 | `movimiento.mjs` | Sin animaciones; con «menos movimiento» del sistema la página no se desplaza sola al leer. |
 | `colores-forzados.mjs` | El modo de colores forzados de Windows: botones con borde propio, sin desborde, visor y divisor distinguibles. |
 | `peso-y-conexion.mjs` | Peso de cada página en un celular (sin caché) y tiempo en conexión lenta. |

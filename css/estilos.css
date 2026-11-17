@@ -1,6 +1,7 @@
 /* Estilos de Memoria de Capitán Sarmiento */
 
 /* FUENTES-INICIO: tipografías propias (licencia SIL OFL 1.1, ver fonts/). Cubren todo el español. */
+
 @font-face {
   font-family: "Source Sans 3";
   font-style: normal;
@@ -134,6 +135,7 @@ h1 {
 }
 
 /* Con el texto muy agrandado, el título principal baja un escalón para no salirse de la pantalla */
+
 :root[data-texto="4"] h1,
 :root[data-texto="5"] h1 { font-size: 1.75rem; }
 
@@ -236,6 +238,7 @@ main {
 }
 
 /* Con texto muy agrandado, los botones chicos ajustan su relleno para entrar en 320 px */
+
 :root[data-texto="4"] .btn.sm,
 :root[data-texto="5"] .btn.sm {
   padding: 0 .6rem;
@@ -290,42 +293,6 @@ figcaption {
   gap: .5rem 1rem;
 }
 
-.pick {
-  display: grid;
-  gap: 1.5rem 1.2rem;
-  grid-template-columns: repeat(6,1fr);
-}
-
-.pick a:nth-child(1) {
-  grid-column: span 6;
-}
-
-.pick a:nth-child(n+2) {
-  grid-column: span 6;
-}
-
-@media (min-width: 700px) {
-  .pick a:nth-child(1) {
-    grid-column: span 4;
-  }
-  .pick a:nth-child(2) {
-    grid-column: span 2;
-  }
-  .pick a:nth-child(n+3) {
-    grid-column: span 3;
-  }
-}
-
-.pick .ph img {
-  aspect-ratio: 4/3;
-  object-fit: cover;
-  width: 100%;
-}
-
-.pick a:nth-child(1) img {
-  aspect-ratio: 16/10;
-}
-
 .ph {
   color: var(--ink);
   text-decoration: none;
@@ -360,6 +327,7 @@ figcaption {
 
 /* Archivo: cuadrícula pareja, todas las fotos con el mismo marco para que los títulos queden alineados.
    Solo se recorta la miniatura; la ficha y el visor muestran la foto completa. */
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
@@ -404,40 +372,6 @@ figcaption {
   border: 1px solid var(--mut);
   min-height: 44px;
   padding: 0 .7rem;
-}
-
-
-.rows {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.rows li {
-  display: grid;
-  grid-template-columns: 96px 1fr;
-  gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--line);
-  align-items: start;
-}
-
-.rows img {
-  width: 96px;
-  aspect-ratio: 1;
-  object-fit: cover;
-  background: var(--surf);
-}
-
-.rows a {
-  font: 600 1.1rem var(--serif);
-  color: var(--ink);
-}
-
-.rows p {
-  margin: .2rem 0 0;
-  font-size: .93rem;
-  color: var(--mut);
 }
 
 .ficha {
@@ -660,8 +594,6 @@ footer.site ul {
 
 .nota { font-size: .9rem; color: var(--mut); }
 
-.pick.mt { margin-top: 1.2rem; }
-
 .empty h1 { font-size: 2rem; margin-bottom: 1rem; }
 
 .no-encontrada { margin-top: 2rem; }
@@ -683,13 +615,15 @@ footer.site ul {
 .tl p { margin-bottom: 0; }
 
 /* ---------- Base y tamaño del texto (el usuario lo elige en «Accesibilidad») ---------- */
+
 html {
   scroll-padding-top: calc(var(--alto-cabecera, 0px) + 1rem);
-  scroll-padding-bottom: calc(var(--alto-barra, 0px) + var(--alto-controles, 0px) + 1rem);
+  scroll-padding-bottom: calc(var(--alto-barra, 0px) + var(--alto-controles, 0px) + var(--alto-linea, 0px) + 1rem);
   -webkit-text-size-adjust: 100%;
 }
 
 /* ---------- Cabecera: pensada primero para el celular ---------- */
+
 header.site {
   background: var(--bg);
   border-bottom: 1px solid var(--line);
@@ -755,6 +689,7 @@ header.site {
 }
 
 /* Pantallas anchas: menú en una fila y cabecera fija */
+
 @media (min-width: 1080px) {
   .btn.menu { display: none; }
   .bar { flex-wrap: wrap; }
@@ -764,6 +699,7 @@ header.site {
 }
 
 /* La cabecera solo queda fija si hay lugar: con texto muy grande o pantallas bajas ocuparía media pantalla */
+
 @media (min-width: 1080px) and (min-height: 640px) {
   :root:not([data-texto="3"]):not([data-texto="4"]):not([data-texto="5"]) header.site {
     position: sticky;
@@ -773,6 +709,7 @@ header.site {
 }
 
 /* ---------- Barra de página: Volver y Escuchar ---------- */
+
 .barra-pagina {
   display: flex;
   flex-wrap: wrap;
@@ -781,6 +718,7 @@ header.site {
 }
 
 /* ---------- Ventanas: visor de imágenes y panel de accesibilidad ---------- */
+
 dialog {
   border: 0;
   padding: 0;
@@ -813,7 +751,6 @@ dialog[open] {
   min-width: 0;
   font-size: 1.15rem;
 }
-
 
 .panel .cuerpo {
   display: grid;
@@ -864,8 +801,11 @@ dialog[open] {
 }
 
 /* ---------- Ajustes de accesibilidad elegidos por la persona ---------- */
+
 :root[data-texto="2"] { font-size: 118%; }
+
 :root[data-texto="3"] { font-size: 138%; }
+
 :root[data-texto="4"] { font-size: 160%; }
 
 :root[data-fuente="legible"] {
@@ -893,8 +833,11 @@ dialog[open] {
 }
 
 :root[data-contraste="alto"] a { text-decoration: underline; }
+
 :root[data-contraste="alto"] .btn { border: 2px solid #fff; }
+
 :root[data-contraste="alto"] .btn.ghost { border-color: #fff; }
+
 :root[data-contraste="alto"] .ph img,
 :root[data-contraste="alto"] .zoomable { outline: 1px solid #fff; }
 
@@ -906,9 +849,11 @@ dialog[open] {
 }
 
 /* ---------- Atributo hidden: debe ganarle a cualquier display ---------- */
+
 [hidden] { display: none !important; }
 
 /* ---------- Aviso de la lectura en voz alta ---------- */
+
 .aviso {
   flex-basis: 100%;
   margin: 0;
@@ -919,6 +864,7 @@ dialog[open] {
 }
 
 /* ---------- Ajustes de lectura y navegación ---------- */
+
 :root { --resalte: rgba(255, 214, 0, .4); }
 
 :root[data-enlaces="resaltados"] a:not(.btn):not(.skip) {
@@ -955,6 +901,7 @@ dialog[open] {
 }
 
 /* ---------- Página de ayuda ---------- */
+
 .texto ul,
 .texto ol { max-width: 66ch; padding-left: 1.3rem; }
 
@@ -963,6 +910,7 @@ dialog[open] {
 .epoca { margin-top: .6rem; font-weight: 600; color: var(--acc); }
 
 /* ---------- Lectura en voz alta: lo que se está leyendo ---------- */
+
 .leyendo {
   background: var(--resalte);
   outline: 3px solid var(--acc);
@@ -970,6 +918,7 @@ dialog[open] {
 }
 
 /* ---------- Resumen y aviso de apartados de Historia ---------- */
+
 .resumen {
   margin: 0 0 1.5rem;
   padding: 1.2rem 1.4rem;
@@ -978,7 +927,9 @@ dialog[open] {
 }
 
 .resumen h2 { margin-bottom: .8rem; }
+
 .resumen ul { margin: 0; padding-left: 1.2rem; max-width: 66ch; }
+
 .resumen li { margin-bottom: .5rem; }
 
 .indice label { display: grid; gap: .3rem; min-width: 0; font-weight: 600; }
@@ -997,16 +948,13 @@ dialog[open] {
 }
 
 /* ---------- Más ajustes de accesibilidad ---------- */
+
 :root[data-grises="si"],
 :root[data-grises="si"] dialog { filter: grayscale(1); }
 
 :root[data-columna="angosta"] main .wrap { max-width: 42rem; }
 
-:root[data-sinminiaturas="si"] .grid .ph img,
-:root[data-sinminiaturas="si"] .pick .ph img,
-:root[data-sinminiaturas="si"] .rows img { display: none; }
-
-:root[data-sinminiaturas="si"] .rows li { grid-template-columns: 1fr; }
+:root[data-sinminiaturas="si"] .grid .ph img { display: none; }
 
 :root[data-botones="grandes"] .btn,
 :root[data-botones="grandes"] #nav a,
@@ -1033,6 +981,7 @@ dialog[open] {
 }
 
 /* ---------- Modo de colores forzados de Windows ---------- */
+
 @media (forced-colors: active) {
   .btn,
   .opciones label,
@@ -1044,6 +993,7 @@ dialog[open] {
 }
 
 /* ---------- Impresión ---------- */
+
 @media print {
   header.site,
   footer.site,
@@ -1062,10 +1012,13 @@ dialog[open] {
 }
 
 /* ---------- Tamaño de texto «Gigante» ---------- */
+
 :root[data-texto="5"] { font-size: 185%; }
 
 /* ---------- Íconos del menú (ayudan a quien lee con dificultad) ---------- */
+
 #nav a { display: flex; align-items: center; gap: .8rem; }
+
 .ico { flex: none; width: 1.5rem; height: 1.5rem; }
 
 @media (min-width: 1080px) {
@@ -1073,6 +1026,7 @@ dialog[open] {
 }
 
 /* ---------- Colores de fondo suaves (reemplazan el fondo claro u oscuro) ---------- */
+
 :root[data-fondo]:not([data-contraste]) {
   --ink: #1f1c18;
   --mut: #4a443a;
@@ -1083,12 +1037,17 @@ dialog[open] {
 }
 
 :root[data-fondo="blanco"]:not([data-contraste]) { --bg: #ffffff; --surf: #efefef; }
+
 :root[data-fondo="amarillo"]:not([data-contraste]) { --bg: #fff6c9; --surf: #f5eaa6; }
+
 :root[data-fondo="verde"]:not([data-contraste]) { --bg: #e3f3e0; --surf: #cfe8cb; }
+
 :root[data-fondo="azul"]:not([data-contraste]) { --bg: #e1eefb; --surf: #cbdff3; }
+
 :root[data-fondo="gris"]:not([data-contraste]) { --bg: #ececec; --surf: #dcdcdc; }
 
 /* ---------- Barra de botones fija abajo, para usar con una mano ---------- */
+
 .barra-inferior {
   position: fixed;
   left: 0;
@@ -1115,9 +1074,11 @@ dialog[open] {
 }
 
 /* Lo que queda fijo abajo (barra inferior y controles de la lectura) no tapa el final de la página */
+
 body { padding-bottom: calc(var(--alto-barra, 0px) + var(--alto-controles, 0px)); }
 
 /* ---------- Historia: lectura fácil y glosario ---------- */
+
 .herramientas-texto {
   display: flex;
   flex-wrap: wrap;
@@ -1127,7 +1088,9 @@ body { padding-bottom: calc(var(--alto-barra, 0px) + var(--alto-controles, 0px))
 }
 
 .glosario { margin: 0; max-width: 66ch; }
+
 .glosario dt { margin-top: 1rem; font: 600 1.1rem var(--serif); }
+
 .glosario dd { margin: .2rem 0 0; }
 
 h1:focus { outline: none; }
@@ -1137,12 +1100,13 @@ h1:focus { outline: none; }
 }
 
 /* ---------- Reflujo: las columnas de cuadrícula pueden encogerse hasta 320 px ---------- */
+
 .hero > *,
 .ficha > *,
-.pick > *,
 .tools > * { min-width: 0; }
 
 /* ---------- Objetivos táctiles de al menos 44 px (pie, migas y línea de tiempo) ---------- */
+
 footer.site li a {
   display: block;
   min-height: 44px;
@@ -1168,7 +1132,9 @@ footer.site ul { gap: 0; }
 .tl .hecho a { display: inline-block; padding: .4rem 0; }
 
 /* ---------- Visor y panel: caben en pantallas bajas ---------- */
+
 dialog[open] { overflow: auto; }
+
 .ds { min-height: 9rem; }
 
 .dbar {
@@ -1179,7 +1145,9 @@ dialog[open] { overflow: auto; }
 }
 
 .dbar input { flex: 1 1 9rem; width: auto; min-width: 0; }
+
 .dbar .botones { grid-column: auto; flex: 1 1 auto; }
+
 .dbar small { flex-basis: 100%; }
 
 @media (max-height: 520px) {
@@ -1197,9 +1165,11 @@ dialog[open] { overflow: auto; }
 }
 
 /* Dentro del contenido, las palabras largas pueden partirse para que nada se salga de 320 px */
+
 main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
 
 /* El menú y las acciones de la cabecera nunca parten una palabra a la mitad en pantallas anchas */
+
 @media (min-width: 1080px) {
   #nav a { white-space: nowrap; overflow-wrap: normal; }
   #nav li { flex: 0 0 auto; }
@@ -1209,12 +1179,14 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
 }
 
 /* Con texto muy grande la cabecera deja de ser fija y puede ocupar varias filas */
+
 :root[data-texto="3"] .bar,
 :root[data-texto="4"] .bar,
 :root[data-texto="5"] .bar { flex-wrap: wrap; }
 
 /* ---------- Controles de la lectura en voz alta ----------
    Quedan fijos abajo mientras se lee, porque la página se desplaza sola siguiendo la voz. */
+
 .controles-lectura {
   position: fixed;
   left: 0;
@@ -1235,18 +1207,121 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   justify-content: center;
 }
 
-/* ---------- Línea de tiempo horizontal ---------- */
-.cronologia-controles { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1rem 0; }
+/* El relleno lateral permite centrar el primer y el último año */
+
+/* Años con más de un hecho llevan un número */
+
+.lista-completa { margin: 2rem 0; }
+
+.lista-completa summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lista-completa .tl { margin-top: 1.2rem; }
+
+/* ---------- Cuadrículas parejas: fotos y documentos con el mismo marco ---------- */
+.grid.mt { margin-top: 1.2rem; }
+
+/* Los documentos se ven completos (sin recortar la hoja) dentro de un marco igual al de las fotos */
+.grid .ph.doc img {
+  object-fit: contain;
+  background: var(--surf);
+  border: 1px solid var(--line);
+}
+
+/* ---------- Video en lengua de señas argentina (LSA) ---------- */
+.lsa { margin: 1rem 0; }
+
+.lsa summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+  color: var(--acc);
+  cursor: pointer;
+}
+
+.lsa video {
+  display: block;
+  width: 100%;
+  max-width: 36rem;
+  aspect-ratio: 16 / 9;
+  margin-top: .6rem;
+  background: #000;
+}
+
+/* ---------- Línea de tiempo: el contenido arriba y la línea con los años abajo ---------- */
+.cronologia { margin-top: 1.5rem; }
+
+.panel-anio {
+  padding: 1.6rem clamp(1rem, 4vw, 2rem) 1.8rem;
+  background: var(--surf);
+  border-top: 4px solid var(--acc);
+}
+
+.anio-grande {
+  margin: 0;
+  font: 600 clamp(2.8rem, 9vw, 4.4rem)/1 var(--serif);
+  color: var(--acc);
+}
+
+.cuenta-anio { margin: .4rem 0 0; color: var(--mut); }
+
+.hecho-anio {
+  display: grid;
+  gap: 1.2rem 2rem;
+  margin-top: 1.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+}
+
+.hecho-texto { min-width: 0; }
+.hecho-anio h3 { margin: 0 0 .4rem; font-size: 1.4rem; }
+.hecho-anio p { margin-bottom: 0; }
+.hecho-anio .fecha { margin-bottom: .3rem; }
+
+.hecho-medios {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  min-width: 0;
+}
+
+@media (min-width: 760px) {
+  .hecho-anio.con-medios { grid-template-columns: minmax(0, 1fr) minmax(0, 17rem); }
+}
+
+/* La línea queda pegada abajo de la pantalla mientras se lee el contenido de arriba */
+.linea-fija {
+  position: sticky;
+  bottom: calc(var(--alto-barra, 0px) + var(--alto-controles, 0px));
+  z-index: 6;
+  padding: .4rem 0 .6rem;
+  background: var(--bg);
+  border-top: 2px solid var(--ink);
+  box-shadow: 0 -12px 20px -14px rgba(0, 0, 0, .45);
+}
+
+@media (max-height: 520px) {
+  .linea-fija { position: static; }
+}
+
+:root[data-texto="4"] .linea-fija,
+:root[data-texto="5"] .linea-fija { position: static; }
 
 .pista {
   overflow-x: auto;
-  padding: .4rem 0 .8rem;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  padding: 1.6rem 0 .4rem;
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
   scrollbar-width: thin;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
 }
 
 .pista.arrastrando { cursor: grabbing; }
@@ -1266,7 +1341,7 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(1.1rem - 2px);
+  top: calc(1.15rem - 2px);
   height: 4px;
   background: var(--ink);
   opacity: .35;
@@ -1277,7 +1352,7 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .35rem;
+  gap: .4rem;
   min-width: 44px;
   min-height: 44px;
   margin-left: calc(var(--salto, 0) * 2px);
@@ -1289,9 +1364,22 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   cursor: pointer;
 }
 
+/* Rótulo del siglo sobre el primer año de cada uno */
+.anio-tab::before {
+  content: attr(data-siglo);
+  position: absolute;
+  top: -1.1rem;
+  left: .4rem;
+  white-space: nowrap;
+  font: 600 .7rem/1 var(--sans);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
 .punto {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.3rem;
+  height: 1.3rem;
   border-radius: 50%;
   background: var(--bg);
   border: 3px solid var(--ink);
@@ -1305,7 +1393,8 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
 .anio-tab[aria-selected="true"] .punto {
   background: var(--acc);
   border-color: var(--acc);
-  transform: scale(1.35);
+  box-shadow: 0 0 0 .35rem var(--resalte);
+  transform: scale(1.3);
 }
 
 .anio-tab[aria-selected="true"] .anio {
@@ -1317,8 +1406,8 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
 .anio-tab::after {
   content: attr(data-cuenta);
   position: absolute;
-  top: 0;
-  right: 0;
+  top: .1rem;
+  right: .1rem;
   min-width: 1.1rem;
   padding: 0 .3rem;
   border-radius: 99px;
@@ -1328,33 +1417,30 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   text-align: center;
 }
 
-.anio-tab[data-cuenta=""]::after { display: none; }
+.anio-tab[data-cuenta=""]::after,
+.anio-tab[data-siglo=""]::before { display: none; }
 
-.panel-anio {
-  margin-top: 1.2rem;
-  padding: 1.2rem 1.4rem;
-  background: var(--surf);
-  border-left: 4px solid var(--acc);
-}
-
-.panel-anio h2 { margin-bottom: .2rem; }
-.cuenta-anio { margin: 0 0 1rem; color: var(--mut); }
-.hecho-anio + .hecho-anio { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
-.hecho-anio h3 { margin: 0 0 .3rem; }
-.hecho-anio p { margin-bottom: 0; }
-.hecho-anio .fecha { margin-bottom: .2rem; }
-
-.lista-completa { margin: 2rem 0; }
-
-.lista-completa summary {
+.cronologia-controles {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  min-height: 44px;
-  font-weight: 600;
-  cursor: pointer;
+  justify-content: space-between;
+  gap: .6rem;
+  margin-top: .3rem;
 }
 
-.lista-completa .tl { margin-top: 1.2rem; }
+.posicion-anio { color: var(--mut); font-size: .95rem; }
+/* En pantallas angostas el contador se lee solo con lector de pantalla, para que los botones entren en una fila */
+@media (max-width: 520px) {
+  .posicion-anio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
 
 :root[data-contraste="alto"] .anios::before { opacity: 1; }
 
@@ -1362,4 +1448,5 @@ main, footer.site, dialog, .barra-inferior { overflow-wrap: anywhere; }
   .anios::before { background: CanvasText; opacity: 1; }
   .punto { border-color: CanvasText; }
   .anio-tab[aria-selected="true"] .punto { background: Highlight; border-color: Highlight; }
+  .linea-fija { border-top-color: CanvasText; }
 }

@@ -24,7 +24,9 @@ function imagen(item, { alt = item.textoAlternativo, prioritaria = false, lista 
   const conjunto = adaptable && item.miniatura
     ? ` srcset="${item.miniatura} 640w, ${item.archivo} ${item.ancho}w" sizes="(min-width: 900px) 45vw, 100vw"`
     : "";
-  return `<img src="${archivo}"${conjunto} width="${item.ancho}" height="${item.alto}" alt="${escapar(alt)}" ${carga} decoding="async">`;
+  // «encuadre» (opcional) elige qué parte de la foto queda a la vista cuando la miniatura se recorta
+  const encuadre = lista && item.encuadre ? ` style="object-position:${escapar(item.encuadre)}"` : "";
+  return `<img src="${archivo}"${conjunto}${encuadre} width="${item.ancho}" height="${item.alto}" alt="${escapar(alt)}" ${carga} decoding="async">`;
 }
 
 function tarjeta(foto) {
@@ -33,14 +35,25 @@ function tarjeta(foto) {
     <span class="cap"><b>${escapar(foto.titulo)}</b><small>${escapar(detalle)}</small></span></a>`;
 }
 
-function filaDocumento(doc) {
-  return `<li>
-    <a href="#/documento/${doc.id}" tabindex="-1" aria-hidden="true">${imagen(doc, { alt: "", lista: true })}</a>
-    <div>
-      <a href="#/documento/${doc.id}">${escapar(doc.titulo)}</a>
-      <p>${escapar(doc.tipo)}</p>
-    </div>
-  </li>`;
+function tarjetaDocumento(doc) {
+  return `<a class="ph doc" href="#/documento/${doc.id}">${imagen(doc, { alt: "", lista: true })}
+    <span class="cap"><b>${escapar(doc.titulo)}</b><small>${escapar(doc.tipo)}</small></span></a>`;
+}
+
+/* Video en lengua de señas argentina (LSA). Se muestra solo si el contenido tiene un campo «lsa» en datos.js. */
+function htmlLsa(item) {
+  const lsa = item.lsa;
+  if (!lsa || !lsa.video) return "";
+  // Los subtítulos se piden recién cuando la persona abre el video (ver el evento «toggle» más abajo)
+  const subtitulos = lsa.subtitulos ? ` data-subtitulos="${lsa.subtitulos}"` : "";
+  const poster = lsa.poster ? ` poster="${lsa.poster}"` : "";
+  return `<details class="lsa">
+    <summary>Ver en lengua de señas argentina (LSA)</summary>
+    <video controls preload="none" playsinline${poster}${subtitulos} aria-label="${escapar(item.titulo)}, en lengua de señas argentina">
+      <source src="${lsa.video}">
+      Tu navegador no puede reproducir este video.
+    </video>
+  </details>`;
 }
 
 function migas(seccion, enlace, titulo) {
@@ -81,11 +94,11 @@ function paginaInicio() {
       </section>
       <section class="sec">
         <div class="head"><h2>Selección de fotografías</h2><a href="#/archivo">Ver las ${FOTOS.length} fotografías</a></div>
-        <div class="pick">${otras.map(tarjeta).join("")}</div>
+        <div class="grid">${otras.map(tarjeta).join("")}</div>
       </section>
       <section class="sec">
         <div class="head"><h2>Documentos</h2><a href="#/documentos">Ver los ${DOCUMENTOS.length} documentos</a></div>
-        <ul class="rows">${DOCUMENTOS.slice(0, 2).map(filaDocumento).join("")}</ul>
+        <div class="grid">${DOCUMENTOS.map(tarjetaDocumento).join("")}</div>
       </section>
       <section class="sec">
         <h2>Acerca del archivo</h2>
@@ -119,6 +132,7 @@ function paginaFicha(lista, id, esDocumento) {
           <h1 class="titulo-ficha">${titulo}</h1>
           ${item.epoca ? `<p class="epoca">Época aproximada: ${escapar(item.epoca)}</p>` : ""}
           <p class="descripcion">${escapar(item.descripcion)}</p>
+          ${htmlLsa(item)}
         </div>
       </article>`),
   };
@@ -176,13 +190,14 @@ function paginaDocumentos() {
     html: contenedor(`
       <h1 class="titulo-pagina">Documentos históricos</h1>
       <p class="lead intro">Se muestran las imágenes completas de los originales.</p>
-      <ul class="rows">${DOCUMENTOS.map(filaDocumento).join("")}</ul>`),
+      <div class="grid">${DOCUMENTOS.map(tarjetaDocumento).join("")}</div>`),
   };
 }
 
 function htmlSeccionesHistoria() {
   return HISTORIA.map((seccion, indice) => `
     <h2 id="apartado-${indice}" tabindex="-1">${escapar(seccion.titulo)}</h2>
+    ${htmlLsa(seccion)}
     ${(ajustes.facil ? seccion.facil : seccion.parrafos).map((texto) => `<p>${escapar(texto)}</p>`).join("")}`).join("");
 }
 
@@ -251,8 +266,8 @@ function paginaGlosario() {
 }
 
 /* ---------- Línea de tiempo horizontal ----------
-   Los años están sobre una línea que se arrastra, se desplaza con el dedo o se recorre con las flechas.
-   Al elegir un año se muestra, debajo, todo lo que pasó ese año. */
+   Arriba se muestra todo lo del año elegido (texto, imágenes y documentos) y abajo queda la línea con los años.
+   La línea se arrastra, se desliza con el dedo o se recorre con las flechas. */
 
 let LINEA = { anios: [], porAnio: new Map() };
 
@@ -262,7 +277,7 @@ function eventosDeLaLinea() {
     anio: doc.anio,
     fecha: doc.fecha,
     titulo: doc.titulo,
-    enlace: `#/documento/${doc.id}`,
+    documento: doc,
     descripcion: "Documento del archivo.",
   }));
   // sort es estable: a igual año se respeta el orden de datos.js
@@ -270,19 +285,37 @@ function eventosDeLaLinea() {
 }
 
 const textoHechos = (cantidad) => `${cantidad} ${cantidad === 1 ? "hecho" : "hechos"}`;
+const enlaceDelEvento = (evento) => (evento.documento ? `#/documento/${evento.documento.id}` : null);
+
+const NUMEROS_ROMANOS = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI"];
+const sigloDe = (anio) => NUMEROS_ROMANOS[Math.floor((anio - 1) / 100) + 1];
+
+// Imágenes y documentos que acompañan a un hecho
+function htmlMediosDelHecho(evento) {
+  const fotos = (evento.relacionadas || []).map((id) => FOTOS.find((foto) => foto.id === id)).filter(Boolean);
+  const tarjetas = [
+    ...(evento.documento ? [tarjetaDocumento(evento.documento)] : []),
+    ...fotos.map(tarjeta),
+  ];
+  if (!tarjetas.length) return "";
+  const nota = fotos.length ? '<p class="nota">Fotografías del archivo relacionadas con el tema. Sus fechas son aproximadas.</p>' : "";
+  return `<div class="hecho-medios">${tarjetas.join("")}${nota}</div>`;
+}
 
 function htmlEventosDelAnio(anio, lista) {
   const hechos = lista.map((evento) => {
-    const titulo = evento.enlace
-      ? `<a href="${evento.enlace}">${escapar(evento.titulo)}</a>`
-      : escapar(evento.titulo);
-    return `<article class="hecho-anio">
-      <p class="fecha">${escapar(evento.fecha)}</p>
-      <h3>${titulo}</h3>
-      <p>${escapar(evento.descripcion)}</p>
+    const medios = htmlMediosDelHecho(evento);
+    return `<article class="hecho-anio${medios ? " con-medios" : ""}">
+      <div class="hecho-texto">
+        <p class="fecha">${escapar(evento.fecha)}</p>
+        <h3>${escapar(evento.titulo)}</h3>
+        <p>${escapar(evento.descripcion)}</p>
+        ${htmlLsa(evento)}
+      </div>
+      ${medios}
     </article>`;
   });
-  return `<h2>${anio}</h2><p class="cuenta-anio">${textoHechos(lista.length)} en este año</p>${hechos.join("")}`;
+  return `<h2 class="anio-grande">${anio}</h2><p class="cuenta-anio">${textoHechos(lista.length)} en este año</p>${hechos.join("")}`;
 }
 
 function paginaLineaDeTiempo(id) {
@@ -299,16 +332,17 @@ function paginaLineaDeTiempo(id) {
     const activo = anio === elegido;
     // Los años muy separados dejan más espacio en la línea (hasta 40 años de diferencia)
     const salto = indice === 0 ? 0 : Math.min(40, anio - anios[indice - 1]);
+    const primeroDelSiglo = indice === 0 || sigloDe(anio) !== sigloDe(anios[indice - 1]);
     return `<button type="button" role="tab" class="anio-tab" id="anio-${anio}" data-anio="${anio}"
       aria-selected="${activo}" aria-controls="panel-anio" tabindex="${activo ? 0 : -1}"
-      aria-label="${anio}, ${textoHechos(cantidad)}" data-cuenta="${cantidad > 1 ? cantidad : ""}" style="--salto:${salto}">
+      aria-label="${anio}, ${textoHechos(cantidad)}" data-cuenta="${cantidad > 1 ? cantidad : ""}"
+      data-siglo="${primeroDelSiglo ? `Siglo ${sigloDe(anio)}` : ""}" style="--salto:${salto}">
       <span class="punto" aria-hidden="true"></span><span class="anio">${anio}</span></button>`;
   });
 
   const filas = eventos.map((evento) => {
-    const titulo = evento.enlace
-      ? `<a href="${evento.enlace}">${escapar(evento.titulo)}</a>`
-      : escapar(evento.titulo);
+    const enlace = enlaceDelEvento(evento);
+    const titulo = enlace ? `<a href="${enlace}">${escapar(evento.titulo)}</a>` : escapar(evento.titulo);
     return `<li>
       <p class="fecha">${escapar(evento.fecha)}</p>
       <h2 class="hecho">${titulo}</h2>
@@ -321,15 +355,20 @@ function paginaLineaDeTiempo(id) {
     html: contenedor(`
       <h1 class="titulo-pagina">Línea de tiempo</h1>
       <p class="lead intro">Hechos de la historia de Capitán Sarmiento con fecha documentada, y los documentos del archivo que la tienen.</p>
-      <p class="nota">Elegí un año en la línea, arrastrala hacia los costados o usá los botones. Abajo aparece todo lo que pasó ese año. Los números marcan los años con más de un hecho.</p>
-      <div class="cronologia-controles">
-        <button type="button" class="btn sm ghost" id="anio-anterior"><span aria-hidden="true">←</span> Año anterior</button>
-        <button type="button" class="btn sm ghost" id="anio-siguiente">Año siguiente <span aria-hidden="true">→</span></button>
+      <p class="nota">Elegí un año en la línea de abajo, arrastrala hacia los costados o usá los botones. Los números marcan los años con más de un hecho.</p>
+      <div class="cronologia">
+        <section class="panel-anio" id="panel-anio" role="tabpanel" aria-labelledby="anio-${elegido}">${htmlEventosDelAnio(elegido, porAnio.get(elegido))}</section>
+        <div class="linea-fija" id="linea-fija">
+          <div class="pista" id="pista" role="region" aria-label="Línea de tiempo: años, de izquierda a derecha">
+            <div class="anios" role="tablist" aria-label="Años" aria-orientation="horizontal">${tabs.join("")}</div>
+          </div>
+          <div class="cronologia-controles">
+            <button type="button" class="btn sm ghost" id="anio-anterior"><span aria-hidden="true">←</span> Año anterior</button>
+            <span class="posicion-anio" id="posicion-anio">Año ${anios.indexOf(elegido) + 1} de ${anios.length}</span>
+            <button type="button" class="btn sm ghost" id="anio-siguiente">Año siguiente <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
       </div>
-      <div class="pista" id="pista" role="region" aria-label="Línea de tiempo: años, de izquierda a derecha">
-        <div class="anios" role="tablist" aria-label="Años" aria-orientation="horizontal">${tabs.join("")}</div>
-      </div>
-      <section class="panel-anio" id="panel-anio" role="tabpanel" aria-labelledby="anio-${elegido}">${htmlEventosDelAnio(elegido, porAnio.get(elegido))}</section>
       <details class="lista-completa">
         <summary>Ver todos los hechos en una lista</summary>
         <ol class="tl">${filas.join("")}</ol>
@@ -363,6 +402,7 @@ function elegirAnio(anio, { enfocar = false, avisar = false } = {}) {
   const panelAnio = $("#panel-anio");
   panelAnio.innerHTML = htmlEventosDelAnio(anio, lista);
   panelAnio.setAttribute("aria-labelledby", `anio-${anio}`);
+  $("#posicion-anio").textContent = `Año ${LINEA.anios.indexOf(anio) + 1} de ${LINEA.anios.length}`;
   // La dirección guarda el año elegido para poder compartirla, sin sumar pasos al historial
   try {
     history.replaceState(history.state, "", `#/linea-de-tiempo/${anio}`);
@@ -392,7 +432,7 @@ function paginaColecciones() {
   const secciones = COLECCIONES.map((nombre) => `
     <section class="sec">
       <h2>${escapar(nombre)}</h2>
-      <div class="pick mt">${FOTOS.filter((foto) => foto.coleccion === nombre).map(tarjeta).join("")}</div>
+      <div class="grid mt">${FOTOS.filter((foto) => foto.coleccion === nombre).map(tarjeta).join("")}</div>
     </section>`).join("");
 
   return {
@@ -425,7 +465,7 @@ function paginaAcerca() {
         <p>Este sitio no usa cuentas, cookies, anuncios ni herramientas de análisis, y no carga letras ni programas de otros sitios. Los ajustes de accesibilidad se guardan solo en tu dispositivo. La búsqueda hablada y la lectura en voz alta usan funciones del navegador: en algunos navegadores, el audio del dictado se procesa en un servicio externo.</p>
         <h2>Declaración de accesibilidad</h2>
         <p>Este sitio se diseñó siguiendo las pautas de accesibilidad WCAG 2.2, nivel AA, y se probó con herramientas automáticas. No tuvo una auditoría externa ni fue probado por personas con todas las discapacidades, así que puede tener fallas.</p>
-        <p>Limitaciones conocidas: no hay videos ni audios grabados, por eso no hay subtítulos ni lengua de señas. La lectura en voz alta y la búsqueda hablada dependen del navegador y del dispositivo. Los documentos manuscritos son imágenes y todavía no tienen transcripción; por ahora cada uno tiene una descripción de lo que dice. Las descripciones de las fotografías son breves.</p>
+        <p>Limitaciones conocidas: todavía no hay videos en lengua de señas argentina; el sitio está preparado para sumarlos apartado por apartado, pero hace falta grabarlos con intérpretes. La lectura en voz alta y la búsqueda hablada dependen del navegador y del dispositivo. Los documentos manuscritos son imágenes y todavía no tienen transcripción; por ahora cada uno tiene una descripción de lo que dice. Las descripciones de las fotografías son breves.</p>
         <p>Si encontrás una dificultad, avisá a quienes administran el archivo para que se corrija.</p>
         <h2>Originales y retoques</h2>
         <p>Las imágenes no se colorean, restauran ni reconstruyen. Las copias de consulta no incluyen metadatos privados.</p>
@@ -460,10 +500,10 @@ function paginaAyuda() {
         </ul>
         <h2>Para recorrer la línea de tiempo</h2>
         <ul>
-          <li>Cada punto de la línea es un año. Tocá un año para ver, debajo, todo lo que pasó ese año.</li>
+          <li>Abajo hay una línea con los años. Tocá un año para ver, arriba, todo lo que pasó ese año, con sus imágenes y documentos.</li>
           <li>Arrastrá la línea con el mouse o deslizala con el dedo. Con el teclado, usá las flechas izquierda y derecha.</li>
           <li>Los botones «Año anterior» y «Año siguiente» pasan de un año al otro.</li>
-          <li>Al final de la página, «Ver todos los hechos en una lista» los muestra de corrido.</li>
+          <li>Más abajo, «Ver todos los hechos en una lista» los muestra de corrido.</li>
         </ul>
         <h2>Para buscar</h2>
         <ul>
@@ -574,6 +614,7 @@ function mostrarPagina() {
   cerrarMenu();
   if (seccion === "archivo") actualizarResultados(false);
   if (seccion === "linea-de-tiempo") centrarEnPista($('.anio-tab[aria-selected="true"]'));
+  actualizarMedidasFijas();
   window.scrollTo(0, 0);
   // El foco va al título: los lectores de pantalla lo leen primero y el teclado empieza desde ahí
   const titulo = $("#main h1");
@@ -771,6 +812,8 @@ function actualizarMedidasFijas() {
   const barra = $("#barra-inferior");
   estilo.setProperty("--alto-cabecera", getComputedStyle(cabecera).position === "sticky" ? `${cabecera.offsetHeight}px` : "0px");
   estilo.setProperty("--alto-barra", barra.hidden ? "0px" : `${barra.offsetHeight}px`);
+  const linea = $("#linea-fija");
+  estilo.setProperty("--alto-linea", linea && getComputedStyle(linea).position === "sticky" ? `${linea.offsetHeight}px` : "0px");
   const controles = document.querySelector("[data-controles-lectura]");
   estilo.setProperty("--alto-controles", controles && !controles.hidden ? `${controles.offsetHeight}px` : "0px");
 }
@@ -1164,6 +1207,17 @@ function terminarArrastre() {
 document.addEventListener("pointerup", terminarArrastre);
 document.addEventListener("pointercancel", terminarArrastre);
 document.addEventListener("touchmove", (evento) => moverRegla(evento.touches[0].clientY), { passive: true });
+
+// Al abrir un video en lengua de señas se suman sus subtítulos (activados por defecto)
+document.addEventListener("toggle", (evento) => {
+  const detalle = evento.target;
+  if (!detalle.matches || !detalle.matches("details.lsa") || !detalle.open) return;
+  const video = detalle.querySelector("video[data-subtitulos]");
+  if (!video || video.querySelector("track")) return;
+  const pista = document.createElement("track");
+  Object.assign(pista, { kind: "captions", srclang: "es", label: "Español", src: video.dataset.subtitulos, default: true });
+  video.append(pista);
+}, true);
 
 // Años de la línea: flechas, Inicio y Fin (patrón de pestañas)
 document.addEventListener("keydown", (evento) => {

@@ -88,15 +88,22 @@ Orden: del más grave al menos grave.
 ## 2.1 Mejoras de diseño pedidas después de la auditoría
 
 ### Línea de tiempo horizontal
-- **Qué es:** una línea con los 38 años que tienen hechos, ordenados de izquierda a derecha. Los años muy separados dejan más espacio entre sí y los que tienen más de un hecho llevan un número.
-- **Cómo se usa:** se elige un año con un clic o un toque, con las flechas (izquierda y derecha, Inicio y Fin) o con los botones «Año anterior» y «Año siguiente». La línea se arrastra con el mouse y se desliza con el dedo. Debajo aparece todo lo que pasó ese año, con su fecha completa, su descripción y el enlace al documento si lo hay. La dirección guarda el año elegido (`#/linea-de-tiempo/1884`) para poder compartirlo.
-- **Accesibilidad:** sigue el patrón de pestañas (`tablist`, `tab`, `tabpanel`) con un solo año en el orden de Tab, nombres como «1882, 2 hechos» (incluyen el año visible), objetivos de 44 px, alternativa al arrastre con botones y teclado (2.5.7), y la lista completa de hechos en un desplegable para leer de corrido.
-- **Verificación:** `linea-de-tiempo.mjs` (escritorio, celular de 375 px y 320 px), axe sin violaciones y sin saltos de nivel de título.
+- **Disposición:** el contenido del año va arriba (texto, imágenes y documentos) y la línea con los años queda abajo, pegada al borde inferior de la pantalla mientras se lee. Con texto muy grande o pantallas bajas deja de ser fija para no ocupar media pantalla.
+- **La línea:** los 38 años que tienen hechos, de izquierda a derecha, con el rótulo de cada siglo. Los años muy separados dejan más espacio entre sí y los que tienen más de un hecho llevan un número.
+- **Qué muestra cada año:** todos sus hechos con fecha completa y descripción; los documentos fechados aparecen con su imagen; algunos hechos llevan fotos del archivo relacionadas por el tema (la estación de 1882 y la iglesia de 1891), con aviso de que sus fechas son aproximadas.
+- **Cómo se usa:** con un clic o un toque, con las flechas (izquierda y derecha, Inicio y Fin) o con los botones «Año anterior» y «Año siguiente». La línea se arrastra con el mouse y se desliza con el dedo. La dirección guarda el año (`#/linea-de-tiempo/1884`) para compartirlo.
+- **Accesibilidad:** patrón de pestañas (`tablist`, `tab`, `tabpanel`) con un solo año en el orden de Tab, nombres como «1882, 2 hechos», objetivos de 44 px, alternativa al arrastre (2.5.7), margen de desplazamiento para que lo fijo no tape el foco (2.4.11) y la lista completa de hechos en un desplegable.
+- **Verificación:** `linea-de-tiempo.mjs` (escritorio, 375 px y 320 px), axe sin violaciones.
 
-### Cuadrícula del archivo
-- **Problema:** las fotos estaban en columnas de alto libre y quedaban unas más abajo que otras.
-- **Corrección:** cuadrícula pareja, con todas las miniaturas en el mismo marco de 4:3. Solo se recorta la miniatura; la ficha y el visor muestran la foto completa.
-- **Verificación:** `archivo-cuadricula.mjs`: mismo alto y proporción a 1280, 900, 375 y 320 px.
+### Cuadrículas parejas en todo el sitio
+- **Problema:** el archivo usaba columnas de alto libre y las fotos quedaban unas más abajo que otras; el inicio y las colecciones mezclaban tarjetas grandes y chicas; los documentos se recortaban en miniaturas cuadradas.
+- **Corrección:** una sola cuadrícula para archivo, inicio, colecciones y documentos, con el mismo marco de 4:3. Las fotos se recortan solo en la miniatura (la ficha y el visor las muestran completas) y los documentos se ven enteros, sin recortar la hoja.
+- **Encuadre:** si en una miniatura el recorte esconde lo importante (por ejemplo, los oradores en la azotea), el campo `encuadre` de esa foto elige qué parte se ve.
+- **Verificación:** `archivo-cuadricula.mjs`: mismo tamaño en cada cuadrícula a 1280, 900, 375 y 320 px.
+
+### Lengua de señas argentina (LSA)
+- **Estado:** el sitio está preparado para mostrar un video en LSA en cualquier foto, documento, apartado de Historia o hecho de la línea. **Todavía no hay videos.** Ver `docs/LENGUA-DE-SENAS.md` y los guiones para quien interprete en `docs/GUIONES-LSA.md`.
+- **Verificación:** `lengua-de-senas.mjs` (con videos simulados).
 
 ## 3. Verificado sin hallazgos
 
@@ -133,7 +140,7 @@ Cada celda se comprobó en Chromium real: ✓ cumple, — no aplica.
 | Ceguera | Estructura semántica, textos alternativos, foco al título, anuncios medidos, lectura en voz alta propia | Verificado con axe y árbol de accesibilidad. **Falta probar con lectores de pantalla reales.** |
 | Baja visión | Cinco tamaños de texto, seis fondos, alto contraste, sin colores, letra legible, espaciado, regla de lectura, zoom de imágenes, reflujo a 320 px | Verificado en navegador real |
 | Daltonismo y sensibilidad a la luz | Nada depende solo del color; fondo oscuro y fondos suaves | Verificado (contraste) |
-| Sordera e hipoacusia | Sin audio obligatorio; lectura fácil y glosario | **Sin videos: sin lengua de señas ni subtítulos** |
+| Sordera e hipoacusia | Sin audio obligatorio; lectura fácil y glosario; soporte listo para videos en LSA con subtítulos | **Preparado, pero todavía no hay videos en lengua de señas** |
 | Movilidad reducida | Todo con teclado, objetivos de 44 px, botones grandes opcionales, barra inferior para una mano, alternativa al arrastre, búsqueda por voz | Verificado. **Falta probar con control por voz y pulsadores.** |
 | Discapacidad cognitiva, dislexia, TDAH, baja alfabetización | Lectura fácil, glosario, resumen, íconos en el menú, ayuda paso a paso, regla y lectura resaltada | Implementado. **Falta probar con personas.** |
 | Temblores y toques accidentales | Botones grandes, sin acciones destructivas ni límites de tiempo | Implementado |
@@ -144,7 +151,7 @@ Cada celda se comprobó en Chromium real: ✓ cumple, — no aplica.
 
 - **Estilos:** `css/estilos.css` (cabecera, reflujo, objetivos, visor, barra inferior, controles de lectura, letras propias).
 - **Lógica:** `js/app.js` (medidas de lo fijo, pausa y saltos en la lectura, anuncios, miniaturas, opción de no desplazar).
-- **Contenido:** `js/datos.js` (campo `miniatura`), `index.html` (visor, panel).
+- **Contenido:** `js/datos.js` (campos `miniatura`, `relacionadas` y `lsa`), `index.html` (visor, panel).
 - **Recursos:** `fonts/` (letras y licencias), `img/min/` (miniaturas).
 - **Documentación y pruebas:** `docs/ACCESIBILIDAD.md`, `pruebas/`, `README.md`.
 
@@ -154,7 +161,7 @@ Cada celda se comprobó en Chromium real: ✓ cumple, — no aplica.
 |---|---|---|
 | Sin prueba con lectores de pantalla reales (NVDA, JAWS, VoiceOver, TalkBack) | Las pruebas automáticas no detectan si la experiencia es comprensible | Quien administra el archivo, con apoyo de una persona usuaria de lector de pantalla |
 | Documentos manuscritos sin transcripción | Una persona ciega solo accede a una descripción, no al contenido | Quien conozca esa letra, con revisión de quien administra el archivo |
-| Sin lengua de señas argentina ni subtítulos | Personas sordas cuya primera lengua es la LSA pueden tener dificultad con textos largos | Quien produzca contenido audiovisual |
+| Todavía no hay videos en lengua de señas argentina | Personas sordas cuya primera lengua es la LSA pueden tener dificultad con textos largos | Quien coordine la producción, con intérpretes de LSA (ver `docs/LENGUA-DE-SENAS.md`) |
 | Solo probado en Chromium | Safari y Firefox pueden comportarse distinto | Quien desarrolla |
 | Voz y dictado dependen del navegador | En algunos dispositivos no hay voz en español | Quien desarrolla (ya avisa al usuario) |
 | Fotos actuales del comparador | Parecen capturas de Street View | Quien administra el archivo |
@@ -191,7 +198,9 @@ lectura-en-voz-alta.mjs           Todo en orden
 movimiento.mjs                    Todo en orden
 colores-forzados.mjs              Todo en orden
 linea-de-tiempo.mjs               Todo en orden
+linea-de-tiempo-foco.mjs         Todo en orden
 archivo-cuadricula.mjs            Todo en orden
+lengua-de-senas.mjs               Todo en orden (con videos simulados)
 fuentes-propias.mjs               pedidos que fallaron: ninguno
 axe-completo.mjs                  Auditorías axe: 97 — Violaciones: 0
 peso-y-conexion.mjs               /archivo 538 KB (antes 1625 KB) · inicio 835 KB (antes 1598 KB)

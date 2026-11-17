@@ -3,6 +3,14 @@
    Cada foto es un bloque { ... }. Cambiá solo el texto entre comillas.
    Usá «null» (sin comillas) para un dato que no corresponde.
    Si un texto lleva comillas dobles, escribilas así: \"  o usá «».
+
+   VIDEO EN LENGUA DE SEÑAS (LSA): cualquier foto, documento, apartado de HISTORIA o hecho de HITOS puede llevar
+       lsa: { video: "lsa/estacion.mp4", subtitulos: "lsa/estacion.vtt" },
+   (subtitulos y poster son opcionales). Si no tiene «lsa», no se muestra nada. Ver docs/LENGUA-DE-SENAS.md.
+
+   FOTOS RELACIONADAS CON UN HECHO: un hecho de HITOS puede llevar
+       relacionadas: ["id-de-una-foto"],
+   y la línea de tiempo mostrará esa foto junto al hecho.
    ============================================================ */
 
 // ---------- FOTOGRAFÍAS ----------
@@ -11,6 +19,7 @@ const FOTOS = [
     id: "calle-arbolada-con-comercios",  // texto de la dirección: #/foto/<id>
     archivo: "img/238429.jpg",
     miniatura: "img/min/238429.jpg",  // versión liviana para las listas; null = se usa la imagen original
+    encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 1026,
     titulo: "Calle arbolada con comercios",
@@ -25,6 +34,7 @@ const FOTOS = [
     id: "estacion-ferroviaria",  // texto de la dirección: #/foto/<id>
     archivo: "img/238430.jpg",
     miniatura: "img/min/238430.jpg",  // versión liviana para las listas; null = se usa la imagen original
+    encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 937,
     titulo: "Estación de ferrocarril con una locomotora a vapor",
@@ -39,6 +49,7 @@ const FOTOS = [
     id: "calle-de-tierra-el-fuego",  // texto de la dirección: #/foto/<id>
     archivo: "img/238432.jpg",
     miniatura: "img/min/238432.jpg",  // versión liviana para las listas; null = se usa la imagen original
+    encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 1280,  // medidas de la imagen en píxeles
     alto: 737,
     titulo: "Calle de tierra frente a la mueblería «El Fuego»",
@@ -57,6 +68,7 @@ const FOTOS = [
     id: "acto-publico-en-esquina",  // texto de la dirección: #/foto/<id>
     archivo: "img/238428.jpg",
     miniatura: "img/min/238428.jpg",  // versión liviana para las listas; null = se usa la imagen original
+    encuadre: "50% 0%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 1125,
     titulo: "Acto público frente a una esquina",
@@ -75,6 +87,7 @@ const FOTOS = [
     id: "banco-de-la-nacion-argentina",  // texto de la dirección: #/foto/<id>
     archivo: "img/238419.jpg",
     miniatura: "img/min/238419.jpg",  // versión liviana para las listas; null = se usa la imagen original
+    encuadre: "50% 25%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 1204,  // medidas de la imagen en píxeles
     alto: 1600,
     titulo: "Banco de la Nación Argentina",
@@ -93,6 +106,7 @@ const FOTOS = [
     id: "iglesia-frente-a-un-descampado",  // texto de la dirección: #/foto/<id>
     archivo: "img/238431.jpg",
     miniatura: "img/min/238431.jpg",  // versión liviana para las listas; null = se usa la imagen original
+    encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 720,  // medidas de la imagen en píxeles
     alto: 429,
     titulo: "Iglesia con campanario frente a un terreno abierto",
@@ -111,6 +125,7 @@ const FOTOS = [
     id: "iglesia-de-torre-con-ciclista",  // texto de la dirección: #/foto/<id>
     archivo: "img/238427.jpg",
     miniatura: null,  // versión liviana para las listas; null = se usa la imagen original
+    encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 267,  // medidas de la imagen en píxeles
     alto: 188,
     titulo: "Calle ancha con una iglesia de torre alta y un ciclista",
@@ -129,6 +144,7 @@ const FOTOS = [
     id: "sala-de-lectura",  // texto de la dirección: #/foto/<id>
     archivo: "img/238424.jpg",
     miniatura: null,  // versión liviana para las listas; null = se usa la imagen original
+    encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 179,
     titulo: "Personas leyendo en una sala con bibliotecas",
@@ -143,6 +159,7 @@ const FOTOS = [
     id: "rancho-con-caballos-y-aves",  // texto de la dirección: #/foto/<id>
     archivo: "img/238422.jpg",
     miniatura: null,  // versión liviana para las listas; null = se usa la imagen original
+    encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 157,
     titulo: "Rancho de techo de paja con caballos y aves",
@@ -331,6 +348,7 @@ const HITOS = [
     fecha: "19 de febrero de 1882",
     titulo: "Se habilita la estación Capitán Sarmiento",
     descripcion: "La estación pertenecía al Ferrocarril del Oeste, en la línea que unía San Antonio de Areco con Pergamino. Su nombre sería adoptado por el pueblo.",
+    relacionadas: ["estacion-ferroviaria"],  // fotos del archivo relacionadas por el tema (ids de FOTOS)
     // Fuente: El Teclado; capitansarmiento.wordpress.com; fundamentos HCD (año 1882)
   },
   {
@@ -366,6 +384,7 @@ const HITOS = [
     fecha: "4 de noviembre de 1891",
     titulo: "Se inaugura el templo parroquial",
     descripcion: "La iglesia en honor a San Carlos Borromeo se levantó con donaciones de vecinos italianos, irlandeses, españoles y franceses entre 1889 y 1891.",
+    relacionadas: ["iglesia-frente-a-un-descampado", "iglesia-de-torre-con-ciclista"],  // fotos del archivo relacionadas por el tema (ids de FOTOS)
     // Fuente: El Teclado, 29/06/2023
   },
   {
