@@ -22,10 +22,10 @@ const FOTOS = [
     encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 1026,
-    titulo: "Calle arbolada con comercios",
-    descripcion: "Vista desde un piso alto de una calle ancha con árboles podados y bancos. Se ven una tienda, una peluquería, un hotel y una fiambrería, además de un carro con caballo y automóviles antiguos.",  // descripción corta
-    epoca: "Hacia 1925–1935",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
-    textoAlternativo: "Vista desde un piso alto de una calle ancha con árboles podados y bancos; hay un carro con caballo, automóviles antiguos y comercios con carteles a ambos lados.",  // descripción breve para lectores de pantalla
+    titulo: "Centro de la ciudad (1925–1935)",
+    descripcion: "Vista del centro urbano desde un punto elevado. Se observa una calle arbolada, con comercios a ambos lados, un carro tirado por caballo y algunos vehículos de época. Los carteles de los locales forman parte de la escena, aunque no todos permiten una lectura completa.",  // descripción corta
+    epoca: "1925–1935",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
+    textoAlternativo: "Vista elevada del centro de la ciudad: calle arbolada, comercios a ambos lados, un carro tirado por caballo y vehículos de época.",  // descripción breve para lectores de pantalla
     coleccion: "Calles y plazas",  // agrupa las fotos en la página Colecciones
     destacada: true,  // true = aparece en el inicio
     actual: null,  // null = sin foto actual (ver README para agregarla)
@@ -37,10 +37,10 @@ const FOTOS = [
     encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 937,
-    titulo: "Estación de ferrocarril con una locomotora a vapor",
-    descripcion: "Andén de una estación con una locomotora a vapor que suelta humo junto a varios vagones, y personas esperando. El edificio tiene dos plantas y una galería cubierta.",  // descripción corta
-    epoca: "Entre 1910 y 1940",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
-    textoAlternativo: "Andén de una estación con un edificio de dos plantas y techo de tejas, una locomotora a vapor con humo a la derecha, vagones, personas esperando y postes blancos en primer plano.",  // descripción breve para lectores de pantalla
+    titulo: "Estación de tren (1910–1940)",
+    descripcion: "Vista del predio de la estación ferroviaria, con construcciones entre árboles y una línea de postes blancos que delimita el terreno. En el extremo derecho se distingue parte de un vehículo ferroviario. En esta fotografía no se aprecia una locomotora a vapor, por lo que no corresponde describir una.",  // descripción corta
+    epoca: "1910–1940",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
+    textoAlternativo: "Vista del predio de la estación de tren, con edificios entre árboles, postes blancos en primer plano y parte de un vehículo ferroviario hacia la derecha.",  // descripción breve para lectores de pantalla
     coleccion: "Ferrocarril",  // agrupa las fotos en la página Colecciones
     destacada: true,  // true = aparece en el inicio
     actual: null,  // null = sin foto actual (ver README para agregarla)
@@ -52,10 +52,10 @@ const FOTOS = [
     encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 1280,  // medidas de la imagen en píxeles
     alto: 737,
-    titulo: "Calle de tierra frente a la mueblería «El Fuego»",
-    descripcion: "Calle de tierra con árboles jóvenes y bancos. A la izquierda, el comercio «El Fuego»; en el centro, un grupo de personas conversa junto a un banco.",  // descripción corta
-    epoca: "Entre 1910 y 1930",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
-    textoAlternativo: "Calle de tierra con árboles jóvenes y bancos; a la izquierda un comercio con el cartel «El Fuego» y, en el centro, un grupo de personas conversando junto a un banco.",  // descripción breve para lectores de pantalla
+    titulo: "Centro de la ciudad (1910–1930)",
+    descripcion: "Escena del centro urbano en una calle de tierra. A un lado se ven construcciones comerciales y una arboleda; varias personas están reunidas junto a los árboles, en un espacio todavía sin pavimentar. La identificación de la imagen la sitúa frente al antiguo comercio «El Fuego».",  // descripción corta
+    epoca: "1910–1930",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
+    textoAlternativo: "Calle de tierra del centro de la ciudad, con comercios, árboles y un grupo de personas reunidas junto a ellos.",  // descripción breve para lectores de pantalla
     coleccion: "Calles y plazas",  // agrupa las fotos en la página Colecciones
     destacada: true,  // true = aparece en el inicio
     actual: {  // foto actual para la barra Antes / Ahora
@@ -71,10 +71,10 @@ const FOTOS = [
     encuadre: "50% 0%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 1600,  // medidas de la imagen en píxeles
     alto: 1125,
-    titulo: "Acto público frente a una esquina",
-    descripcion: "Multitud con banderas y papel picado frente a un edificio de esquina. En la azotea, un hombre parece hablar desde un atril junto a otras dos personas; se ve también un molino de viento.",  // descripción corta
+    titulo: "Acto público en lo que hoy es conocido como Zapatería Bilbao",
+    descripcion: "Un grupo numeroso de personas se reúne frente a un edificio de esquina durante un acto público. Se observan banderas y adornos entre la multitud, y varias personas sobre la azotea. La ubicación está identificada como el lugar que hoy se conoce por la Zapatería Bilbao; la fotografía, por sí sola, no permite precisar qué acto se realizó.",  // descripción corta
     epoca: "Década de 1960",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
-    textoAlternativo: "Multitud con banderas y papel picado frente a un edificio de esquina; en la azotea hay tres personas junto a un molino de viento.",  // descripción breve para lectores de pantalla
+    textoAlternativo: "Multitud reunida frente a un edificio de esquina durante un acto público, con banderas y varias personas sobre la azotea. Lugar identificado como la actual Zapatería Bilbao.",  // descripción breve para lectores de pantalla
     coleccion: "Edificios y esquinas",  // agrupa las fotos en la página Colecciones
     destacada: true,  // true = aparece en el inicio
     actual: {  // foto actual para la barra Antes / Ahora
@@ -109,10 +109,10 @@ const FOTOS = [
     encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 720,  // medidas de la imagen en píxeles
     alto: 429,
-    titulo: "Iglesia con campanario frente a un terreno abierto",
-    descripcion: "Una iglesia con campanario al fondo de un terreno abierto, con un automóvil antiguo, un carro con caballo, personas y un ciclista en primer plano.",  // descripción corta
-    epoca: "Hacia 1930",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
-    textoAlternativo: "Iglesia de campanario al fondo de un terreno abierto, con un automóvil antiguo, un carro con caballo, personas y un ciclista en primer plano.",  // descripción breve para lectores de pantalla
+    titulo: "Plaza San Martín (1930)",
+    descripcion: "Vista de la Plaza San Martín en torno a 1930, con un amplio espacio abierto y la iglesia al fondo. En primer plano aparecen un automóvil, un carro tirado por caballo y varias personas; también se distinguen senderos y sectores de terreno sin pavimentar.",  // descripción corta
+    epoca: "1930",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
+    textoAlternativo: "Vista de la Plaza San Martín hacia 1930, con la iglesia al fondo, un automóvil, un carro tirado por caballo y personas en el espacio abierto.",  // descripción breve para lectores de pantalla
     coleccion: "Edificios y esquinas",  // agrupa las fotos en la página Colecciones
     destacada: false,  // true = aparece en el inicio
     actual: {  // foto actual para la barra Antes / Ahora
@@ -128,10 +128,10 @@ const FOTOS = [
     encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 267,  // medidas de la imagen en píxeles
     alto: 188,
-    titulo: "Calle ancha con una iglesia de torre alta y un ciclista",
-    descripcion: "Calle ancha con una iglesia de torre alta a un costado, una farola y un ciclista.",  // descripción corta
-    epoca: "Entre 1950 y 1970",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
-    textoAlternativo: "Calle ancha con una iglesia de torre alta con campanario a un costado, una columna de alumbrado y un ciclista.",  // descripción breve para lectores de pantalla
+    titulo: "Centro de la ciudad con la iglesia San Carlos (1998)",
+    descripcion: "Vista del centro de Capitán Sarmiento en 1998. La iglesia San Carlos se destaca por su torre, junto a la calle y los comercios del entorno. En primer plano se observa a una persona circulando en bicicleta. La fecha reemplaza el intervalo anterior de 1950 a 1970.",  // descripción corta
+    epoca: "1998",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
+    textoAlternativo: "Centro de Capitán Sarmiento en 1998, con la torre de la iglesia San Carlos, comercios y una persona circulando en bicicleta.",  // descripción breve para lectores de pantalla
     coleccion: "Edificios y esquinas",  // agrupa las fotos en la página Colecciones
     destacada: false,  // true = aparece en el inicio
     actual: {  // foto actual para la barra Antes / Ahora
@@ -147,10 +147,10 @@ const FOTOS = [
     encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 179,
-    titulo: "Personas leyendo en una sala con bibliotecas",
-    descripcion: "Varias personas sentadas a una mesa larga leen en una sala con bibliotecas de puertas vidriadas y un cuadro en la pared.",  // descripción corta
-    epoca: "Entre 1920 y 1940",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
-    textoAlternativo: "Personas sentadas a una mesa larga leyendo, en una sala con bibliotecas de puertas vidriadas y un cuadro en la pared.",  // descripción breve para lectores de pantalla
+    titulo: "Primera junta en Capitán Sarmiento para separarse de Arrecifes y ser un partido independiente",
+    descripcion: "Varias personas aparecen reunidas alrededor de una mesa larga, en una sala con bibliotecas y libros. Según la identificación aportada para esta fotografía, representa la primera junta de Capitán Sarmiento vinculada con la iniciativa de separarse de Arrecifes y constituirse en partido independiente. La imagen no permite identificar por sí sola a las personas ni establecer una fecha exacta.",  // descripción corta
+    epoca: "Fecha no confirmada",  // época sin documentación suficiente
+    textoAlternativo: "Personas reunidas alrededor de una mesa larga en una sala con bibliotecas. La fotografía está identificada como la primera junta de Capitán Sarmiento para impulsar su separación de Arrecifes y su constitución como partido independiente.",  // descripción breve para lectores de pantalla
     coleccion: "Otras imágenes",  // agrupa las fotos en la página Colecciones
     destacada: false,  // true = aparece en el inicio
     actual: null,  // null = sin foto actual (ver README para agregarla)
@@ -162,10 +162,10 @@ const FOTOS = [
     encuadre: "50% 50%",  // parte de la foto que se ve en las listas (horizontal vertical); null = al centro
     ancho: 280,  // medidas de la imagen en píxeles
     alto: 157,
-    titulo: "Rancho de techo de paja con caballos y aves",
-    descripcion: "Rancho de paredes bajas y techo de paja en el campo, con caballos, un carro y una fila de aves blancas en primer plano.",  // descripción corta
-    epoca: "Entre 1890 y 1930",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
-    textoAlternativo: "Rancho de techo de paja en el campo, con caballos, una persona montada, un carro y una fila de aves blancas en primer plano.",  // descripción breve para lectores de pantalla
+    titulo: "Supuesta primera casa/rancho de Capitán Sarmiento (1890–1930)",
+    descripcion: "Fotografía de un rancho de techo de paja en un entorno rural. Delante de la construcción se ven caballos, un carro y aves; también aparece una persona junto a los animales. La identificación como primera casa o rancho de Capitán Sarmiento es tentativa y no debe considerarse confirmada sin una fuente documental que la respalde.",  // descripción corta
+    epoca: "1890–1930",  // época aproximada, estimada por lo que se ve (vehículos, ropa, estilo); null si no se sabe
+    textoAlternativo: "Rancho de techo de paja en un entorno rural, con caballos, un carro, una persona y aves en primer plano. Su identificación como primera casa o rancho de Capitán Sarmiento es presunta.",  // descripción breve para lectores de pantalla
     coleccion: "Otras imágenes",  // agrupa las fotos en la página Colecciones
     destacada: false,  // true = aparece en el inicio
     actual: null,  // null = sin foto actual (ver README para agregarla)
